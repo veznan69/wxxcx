@@ -1,0 +1,77 @@
+<!-- pages/pointRules/pointRules.wxml -->
+<view class="rules-container">
+  <view class="rules-header">
+    <text class="header-icon">📖</text>
+    <text class="header-title">积分规则说明</text>
+  </view>
+
+  <!-- 获取积分规则 -->
+  <view class="rule-section">
+    <view class="section-title">
+      <text class="title-text">如何获取积分</text>
+    </view>
+    <view class="rule-list">
+      <view class="rule-item" wx:for="{{getRules}}" wx:key="name">
+        <view class="rule-header">
+          <text class="rule-icon">{{item.icon}}</text>
+          <text class="rule-name">{{item.name}}</text>
+          <text class="rule-points">+{{item.points}}积分</text>
+        </view>
+        <text class="rule-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 使用积分规则 -->
+  <view class="rule-section">
+    <view class="section-title">
+      <text class="title-text">如何使用积分</text>
+    </view>
+    <view class="rule-list">
+      <view class="rule-item">
+        <view class="rule-header">
+          <text class="rule-icon">🎁</text>
+          <text class="rule-name">积分兑换</text>
+        </view>
+        <text class="rule-desc">在积分商城中兑换商品，兑换成功后积分将被扣除。</text>
+      </view>
+      <view class="rule-item">
+        <view class="rule-header">
+          <text class="rule-icon">⏰</text>
+          <text class="rule-name">积分有效期</text>
+        </view>
+        <text class="rule-desc">积分有效期为1年，逾期未使用的积分将自动清零。</text>
+      </view>
+      <view class="rule-item">
+        <view class="rule-header">
+          <text class="rule-icon">💰</text>
+          <text class="rule-name">积分与现金</text>
+        </view>
+        <text class="rule-desc">积分不能兑换现金，仅可在本平台积分商城中使用。</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 注意事项 -->
+  <view class="rule-section">
+    <view class="section-title">
+      <text class="title-text">注意事项</text>
+    </view>
+    <view class="notice-list">
+      <text class="notice-item">1. 积分获取规则可能会进行调整，请以最新公告为准。</text>
+      <text class="notice-item">2. 每日签到在当日23:59:59前完成有效。</text>
+      <text class="notice-item">3. 订单取消或退款，对应的积分将被收回。</text>
+      <text class="notice-item">4. 恶意刷分行为将受到严厉处罚，严重者将被封号。</text>
+      <text class="notice-item">5. 积分商城商品数量有限，先到先得，兑完即止。</text>
+    </view>
+  </view>
+
+  <!-- 联系客服 -->
+  <view class="contact-box">
+    <text class="contact-text">如有疑问，请联系客服</text>
+    <view class="contact-btn" bindtap="contactService">
+      <text class="btn-icon">💬</text>
+      <text class="btn-text">联系客服</text>
+    </view>
+  </view>
+</view>

@@ -13,7 +13,12 @@ exports.main = async () => {
       'orders',
       'users',
       'goods_products',
-      'user_messages'
+      'user_messages',
+      'user_points',
+      'point_records',
+      'point_goods',
+      'point_exchanges',
+      'check_in_records'
     ];
 
     const results = [];

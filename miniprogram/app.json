@@ -40,7 +40,9 @@
     "pages/serviceChat/serviceChat",
     "pages/youquan/youquan",
     "pages/publishPost/publishPost",
-    "pages/postDetail/postDetail"
+    "pages/postDetail/postDetail",
+    "pages/pointsMall/pointsMall",
+    "pages/pointRules/pointRules"
   ],
   "window": {
     "navigationBarBackgroundColor": "#FF6600",

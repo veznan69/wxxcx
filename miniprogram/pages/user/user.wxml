@@ -52,6 +52,19 @@
     </view>
   </view>
 
+  <!-- 积分卡片 -->
+  <view class="points-card" bindtap="gotoPointsMall">
+    <view class="points-info">
+      <view class="points-label">我的积分</view>
+      <view class="points-value">{{userPoints || 0}}</view>
+    </view>
+    <view class="points-action">
+      <text>去兑换</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="points-bg-icon">⭐</view>
+  </view>
+
   <view class="menu-list">
     <view
       class="menu-item"

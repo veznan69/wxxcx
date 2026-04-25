@@ -15,7 +15,8 @@ Page({
     pendingPayCount: 0,
     pendingShipCount: 0,
     pendingReceiveCount: 0,
-    hasUnreadMessage: false
+    hasUnreadMessage: false,
+    userPoints: 0
   },
 
   onShow() {
@@ -23,6 +24,7 @@ Page({
     this.refreshUserState();
     this.loadOrderStatusStats();
     this.checkUnreadMessages();
+    this.loadUserPoints();
   },
 
   async checkUnreadMessages() {
@@ -109,6 +111,7 @@ Page({
 
     const baseMenus = [
       { name: '我的订单', icon: '📦', tap: 'gotoOrders' },
+      { name: '积分商城', icon: '🎁', tap: 'gotoPointsMall' },
       { name: '我的体验券', icon: '🎟️', tap: 'gotoCoupons' },
       { name: '我的认养', icon: '🌳', tap: 'gotoOrchard' },
       { name: '我的预约', icon: '📅', tap: 'gotoMyReserve' }
@@ -478,6 +481,37 @@ Page({
         pendingReceiveCount: 0
       });
     }
+  },
+
+  async loadUserPoints() {
+    const app = getApp();
+    const openid = app.globalData.openid || wx.getStorageSync('openid');
+    if (!openid) {
+      this.setData({ userPoints: 0 });
+      return;
+    }
+
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'pointsManager',
+        data: { action: 'getUserPoints' }
+      });
+
+      if (res.result && res.result.success) {
+        this.setData({ userPoints: res.result.points || 0 });
+      }
+    } catch (err) {
+      console.error('加载积分失败', err);
+      this.setData({ userPoints: 0 });
+    }
+  },
+
+  gotoPointsMall() {
+    if (!this.data.isLoggedIn) {
+      wx.showToast({ title: '请先登录', icon: 'none' });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/pointsMall/pointsMall' });
   }
 });
 

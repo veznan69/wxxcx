@@ -1,0 +1,72 @@
+<!-- pages/pointsMall/pointsMall.wxml -->
+<view class="mall-container">
+  <!-- 积分头部卡片 -->
+  <view class="points-header">
+    <view class="points-info">
+      <view class="points-label">可用积分</view>
+      <view class="points-value">{{userPoints || 0}}</view>
+    </view>
+    <view class="points-actions">
+      <view class="action-btn" bindtap="gotoPointRules">
+        <text class="btn-icon">📖</text>
+        <text class="btn-text">积分规则</text>
+      </view>
+      <view class="action-btn" bindtap="checkIn">
+        <text class="btn-icon">{{checkedIn ? '✅' : '📅'}}</text>
+        <text class="btn-text">{{checkedIn ? '已签到' : '每日签到'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分获取渠道 -->
+  <view class="section-title">
+    <text class="title-icon">💡</text>
+    <text class="title-text">如何获取积分</text>
+  </view>
+  <view class="get-points-ways">
+    <view class="way-item" wx:for="{{pointWays}}" wx:key="name">
+      <text class="way-icon">{{item.icon}}</text>
+      <view class="way-info">
+        <text class="way-name">{{item.name}}</text>
+        <text class="way-desc">{{item.desc}}</text>
+      </view>
+      <view class="way-points">
+        <text class="points-num">+{{item.points}}</text>
+        <text class="points-unit">积分</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 兑换商品列表 -->
+  <view class="section-title">
+    <text class="title-icon">🎁</text>
+    <text class="title-text">积分兑换</text>
+  </view>
+
+  <view class="goods-list">
+    <view class="good-item" wx:for="{{goods}}" wx:key="_id" bindtap="gotoGoodsDetail" data-id="{{item._id}}">
+      <view class="good-image">
+        <image src="{{item.image || '/images/placeholder.png'}}" mode="aspectFill"></image>
+        <view class="good-tag" wx:if="{{item.stock <= 0}}">已售罄</view>
+      </view>
+      <view class="good-info">
+        <text class="good-name">{{item.name}}</text>
+        <text class="good-desc">{{item.desc || ''}}</text>
+        <view class="good-bottom">
+          <view class="good-points">
+            <text class="points-num">{{item.points}}</text>
+            <text class="points-unit">积分</text>
+          </view>
+          <text class="good-stock">剩余{{item.stock || 0}}件</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{goods.length === 0 && !loading}}">
+      <text class="empty-icon">🎁</text>
+      <text class="empty-text">暂无可兑换商品</text>
+      <text class="empty-tip">敬请期待更多好物</text>
+    </view>
+  </view>
+</view>

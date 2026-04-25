@@ -1,0 +1,263 @@
+/* pages/pointsMall/pointsMall.wxss */
+.mall-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx;
+}
+
+/* 积分头部卡片 */
+.points-header {
+  background: linear-gradient(135deg, #ffd666, #ff9c00);
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 8rpx 20rpx rgba(255, 156, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.points-info {
+  flex: 1;
+}
+
+.points-label {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 12rpx;
+}
+
+.points-value {
+  font-size: 72rpx;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.points-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  min-width: 100rpx;
+}
+
+.btn-icon {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+}
+
+.btn-text {
+  font-size: 22rpx;
+  color: #fff;
+}
+
+/* 区块标题 */
+.section-title {
+  display: flex;
+  align-items: center;
+  margin: 40rpx 0 20rpx;
+  padding: 0 10rpx;
+}
+
+.title-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.title-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+/* 积分获取渠道 */
+.get-points-ways {
+  background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.way-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.way-item:last-child {
+  border-bottom: none;
+}
+
+.way-icon {
+  font-size: 44rpx;
+  margin-right: 20rpx;
+}
+
+.way-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.way-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 6rpx;
+}
+
+.way-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.way-points {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.way-points .points-num {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ff9c00;
+}
+
+.way-points .points-unit {
+  font-size: 22rpx;
+  color: #ff9c00;
+}
+
+/* 商品列表 */
+.goods-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.good-item {
+  width: 340rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.good-image {
+  position: relative;
+  width: 340rpx;
+  height: 340rpx;
+}
+
+.good-image image {
+  width: 100%;
+  height: 100%;
+}
+
+.good-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.good-info {
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.good-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.good-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.good-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.good-points {
+  display: flex;
+  align-items: baseline;
+}
+
+.good-points .points-num {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff9c00;
+}
+
+.good-points .points-unit {
+  font-size: 22rpx;
+  color: #ff9c00;
+  margin-left: 4rpx;
+}
+
+.good-stock {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 空状态 */
+.empty-state {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+  background-color: #fff;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.empty-tip {
+  font-size: 24rpx;
+  color: #ccc;
+}
