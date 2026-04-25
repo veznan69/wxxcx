@@ -1,0 +1,31 @@
+<!-- pages/studyDetail/studyDetail.wxml -->
+<view class="detail-page" wx:if="{{course}}">
+  <!-- 头部海报区域 -->
+  <view class="header-poster">
+    <image class="poster-bg" src="{{course.image}}" mode="aspectFill"></image>
+    <view class="poster-overlay">
+      <text class="course-name">{{course.name}}</text>
+      <text class="course-sub">{{course.subTitle}}</text>
+    </view>
+  </view>
+
+  <!-- 海报大图展示区域（可直接展示课程海报） -->
+  <view class="poster-full">
+  <image 
+    class="full-poster" 
+    src="{{course.poster}}" 
+    mode="widthFix"
+    bindtap="previewPoster"
+    data-url="{{course.poster}}"
+  ></image>
+  </view>
+
+  <!-- 底部预约栏 -->
+  <view class="bottom-bar">
+    <view class="price-info">
+      <text class="label">研学费用</text>
+      <text class="price">¥{{course.price}}</text>
+    </view>
+    <button class="signup-btn" bindtap="signup">立即预约</button>
+  </view>
+</view>

@@ -1,0 +1,83 @@
+.order-container {
+  background: #f8f8f8;
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+.tab-bar {
+  display: flex;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.tab {
+  flex: 1;
+  padding: 30rpx 0;
+  text-align: center;
+  font-size: 30rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab.active {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  width: 60rpx;
+  height: 6rpx;
+  background: #ff6600;
+  border-radius: 3rpx;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.order-list {
+  padding: 0 20rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.card-type {
+  font-size: 26rpx;
+  color: #ff6600;
+  margin-bottom: 10rpx;
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.card-info {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.card-status {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.empty-box {
+  padding: 200rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  color: #999;
+  font-size: 28rpx;
+}

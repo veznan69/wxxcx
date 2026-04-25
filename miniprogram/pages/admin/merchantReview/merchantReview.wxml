@@ -1,0 +1,114 @@
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="title">商家入驻审核</view>
+    <view class="stats" wx:if="{{applications.length > 0}}">
+      共 {{applications.length}} 条申请，待审核 {{pendingCount}}
+    </view>
+  </view>
+
+  <!-- 状态筛选 -->
+  <view class="tabs">
+    <view class="tab {{currentStatus === 'all' ? 'active' : ''}}" bindtap="filterByStatus" data-status="all">
+      全部
+    </view>
+    <view class="tab {{currentStatus === 'pending' ? 'active' : ''}}" bindtap="filterByStatus" data-status="pending">
+      待审核
+    </view>
+    <view class="tab {{currentStatus === 'approved' ? 'active' : ''}}" bindtap="filterByStatus" data-status="approved">
+      已通过
+    </view>
+    <view class="tab {{currentStatus === 'rejected' ? 'active' : ''}}" bindtap="filterByStatus" data-status="rejected">
+      已拒绝
+    </view>
+  </view>
+
+  <!-- 申请列表 -->
+  <view class="list" wx:if="{{filteredApplications.length > 0}}">
+    <view class="card" wx:for="{{filteredApplications}}" wx:key="_id">
+      <view class="card-header">
+        <view class="shop-name">{{item.shopName}}</view>
+        <view class="status-tag status-{{item.status}}">
+          {{item.status === 'pending' ? '待审核' : (item.status === 'approved' ? '已通过' : '已拒绝')}}
+        </view>
+      </view>
+
+      <view class="info-row">
+        <text class="label">联系人：</text>
+        <text>{{item.contactName}}  {{item.contactPhone}}</text>
+      </view>
+      <view class="info-row">
+        <text class="label">店铺地址：</text>
+        <text>{{item.shopAddress}}</text>
+      </view>
+      <view class="info-row" wx:if="{{item.remark}}">
+        <text class="label">备注：</text>
+        <text>{{item.remark}}</text>
+      </view>
+
+      <!-- 营业执照图片 -->
+      <view class="license-section" wx:if="{{item.licenseImages && item.licenseImages.length > 0}}">
+        <text class="label">营业执照：</text>
+        <view class="image-list">
+          <image 
+            wx:for="{{item.licenseImages}}" 
+            wx:key="index" 
+            src="{{item}}" 
+            mode="aspectFill" 
+            class="license-img"
+            bindtap="previewImage"
+            data-url="{{item}}"
+            data-list="{{item.licenseImages}}"
+          />
+        </view>
+      </view>
+
+      <!-- 申请时间 -->
+      <view class="time-row">
+        <text>申请时间：{{item.createTimeStr}}</text>
+        <text wx:if="{{item.reviewTime}}">审核时间：{{item.reviewTimeStr}}</text>
+      </view>
+
+      <!-- 拒绝理由展示 -->
+      <view class="reject-reason" wx:if="{{item.status === 'rejected' && item.rejectReason}}">
+        <text class="label">拒绝理由：</text>
+        <text>{{item.rejectReason}}</text>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="actions" wx:if="{{item.status === 'pending'}}">
+        <button class="btn btn-approve" bindtap="approve" data-id="{{item._id}}">通过</button>
+        <button class="btn btn-reject" bindtap="showRejectModal" data-id="{{item._id}}">拒绝</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:else>
+    <image src="/images/empty.png" mode="aspectFit" class="empty-img" wx:if="{{false}}"></image>
+    <text class="empty-text">暂无申请记录</text>
+  </view>
+
+  <!-- 权限拦截层 -->
+  <view class="permission-deny" wx:if="{{!hasPermission}}">
+    <view class="deny-icon">🔒</view>
+    <view class="deny-text">{{permissionMsg}}</view>
+    <button class="deny-btn" bindtap="goBack">返回</button>
+  </view>
+
+  <!-- 拒绝理由弹窗 -->
+  <view class="modal-mask" wx:if="{{showRejectModal}}" bindtap="hideRejectModal"></view>
+  <view class="modal-content" wx:if="{{showRejectModal}}">
+    <view class="modal-title">填写拒绝理由</view>
+    <textarea 
+      placeholder="请输入拒绝理由（选填）" 
+      value="{{rejectReason}}" 
+      bindinput="onRejectReasonInput"
+      maxlength="200"
+    />
+    <view class="modal-btns">
+      <button class="cancel-btn" bindtap="hideRejectModal">取消</button>
+      <button class="confirm-btn" bindtap="confirmReject">确认拒绝</button>
+    </view>
+  </view>
+</view>

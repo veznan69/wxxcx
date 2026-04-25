@@ -1,0 +1,146 @@
+/* pages/trace/trace.wxss */
+.trace-container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 32rpx 30rpx 60rpx;
+}
+
+.title {
+  font-size: 44rpx;
+  font-weight: bold;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 20rpx 0 40rpx;
+  letter-spacing: 2rpx;
+}
+
+/* 卡片样式 */
+.form-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 32rpx;
+  margin-bottom: 28rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.2s;
+}
+
+.form-label {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+/* 输入行 */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.input {
+  flex: 1;
+  background: #f8fafd;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  font-size: 30rpx;
+  color: #333;
+  border: 1rpx solid #e9ecef;
+  transition: border 0.2s;
+}
+.input:focus {
+  border-color: #ff6600;
+}
+
+.random-btn {
+  background: #fff;
+  color: #ff6600;
+  border: 1rpx solid #ff6600;
+  border-radius: 48rpx;
+  padding: 18rpx 28rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.random-btn:active {
+  background: #fff5ee;
+  transform: scale(0.96);
+}
+
+.hint {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 16rpx;
+}
+
+/* 选择器样式 */
+.picker-value {
+  background: #f8fafd;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  font-size: 30rpx;
+  color: #666;
+  border: 1rpx solid #e9ecef;
+}
+.picker-value:active {
+  background: #f0f2f5;
+}
+
+/* 生成按钮 */
+.generate-btn {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(135deg, #ffaa44, #ff6600);
+  color: #fff;
+  border-radius: 60rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  margin: 40rpx 0 30rpx;
+  border: none;
+  box-shadow: 0 8rpx 20rpx rgba(255, 102, 0, 0.25);
+  transition: transform 0.1s, opacity 0.2s;
+}
+.generate-btn:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+/* 二维码卡片 */
+.qrcode-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 48rpx 40rpx;
+  text-align: center;
+  margin-top: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+}
+
+.qrcode-img {
+  width: 320rpx;
+  height: 320rpx;
+  margin: 0 auto;
+  border-radius: 24rpx;
+  background: #f8fafd;
+  padding: 20rpx;
+}
+
+.qrcode-actions {
+  display: flex;
+  margin-top: 48rpx;
+  gap: 24rpx;
+}
+
+.action-btn {
+  flex: 1;
+  background: #f5f5f5;
+  color: #333;
+  border-radius: 60rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  padding: 20rpx 0;
+  border: none;
+  transition: background 0.2s;
+}
+.action-btn:active {
+  background: #e8e8e8;
+}

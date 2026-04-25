@@ -1,0 +1,131 @@
+<!-- pages/courseReservation/courseReservation.wxml -->
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">研学课程预约</text>
+    <text class="subtitle">请填写预约信息</text>
+  </view>
+
+  <!-- 课程信息卡片 -->
+  <view class="course-card">
+    <image class="course-image" src="{{course.image}}" mode="aspectFill"></image>
+    <view class="course-info">
+      <text class="course-name">{{course.name}}</text>
+      <view class="course-price">
+        <text class="price">¥{{course.price}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 表单区域 -->
+  <view class="form-section">
+    <text class="section-title">预约信息</text>
+
+    <view class="form-item required">
+      <text class="label">出行时间</text>
+      <picker mode="date" start="{{minDate}}" end="{{maxDate}}" value="{{formData.travelDate}}" bindchange="onDateChange">
+        <view class="picker {{formData.travelDate ? '' : 'placeholder'}}">
+          {{formData.travelDate || '请选择出行时间'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item required">
+      <text class="label">出行人数</text>
+      <picker mode="selector" range="{{peopleOptions}}" bindchange="onPeopleChange">
+        <view class="picker {{formData.peopleCount ? '' : 'placeholder'}}">
+          {{formData.peopleCount || '请选择出行人数'}}人
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">课程类型</text>
+      <input
+        class="input"
+        placeholder="请输入课程类型（可选）"
+        value="{{formData.courseType}}"
+        bindinput="onInputChange"
+        data-field="courseType"
+      />
+    </view>
+
+    <view class="form-item required">
+      <text class="label">联系人</text>
+      <input
+        class="input"
+        placeholder="请输入联系人姓名"
+        value="{{formData.contactName}}"
+        bindinput="onInputChange"
+        data-field="contactName"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">紧急联系人</text>
+      <input
+        class="input"
+        placeholder="请输入紧急联系人（可选）"
+        value="{{formData.emergencyContact}}"
+        bindinput="onInputChange"
+        data-field="emergencyContact"
+      />
+    </view>
+
+    <view class="form-item required">
+      <text class="label">联系电话</text>
+      <input
+        class="input"
+        type="number"
+        placeholder="请输入联系电话"
+        value="{{formData.contactPhone}}"
+        bindinput="onInputChange"
+        data-field="contactPhone"
+        maxlength="11"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">紧急联系电话</text>
+      <input
+        class="input"
+        type="number"
+        placeholder="请输入紧急联系电话（可选）"
+        value="{{formData.emergencyPhone}}"
+        bindinput="onInputChange"
+        data-field="emergencyPhone"
+        maxlength="11"
+      />
+    </view>
+
+    <view class="form-item required">
+      <text class="label">单位</text>
+      <input
+        class="input"
+        placeholder="请输入学校、公司或团队名称"
+        value="{{formData.organization}}"
+        bindinput="onInputChange"
+        data-field="organization"
+      />
+    </view>
+
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea
+        class="textarea"
+        placeholder="请输入备注信息（可选）"
+        value="{{formData.remarks}}"
+        bindinput="onInputChange"
+        data-field="remarks"
+        maxlength="200"
+      />
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="footer-bar">
+    <view class="footer-center">
+      <button class="submit-btn" bindtap="submitReservation">确认预约</button>
+    </view>
+  </view>
+</view>

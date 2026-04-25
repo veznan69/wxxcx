@@ -1,0 +1,33 @@
+<view class="trace-container">
+  <view class="title">溯源码生成工具</view>
+
+  <!-- 溯源ID输入卡片 -->
+  <view class="form-card">
+    <view class="form-label">溯源ID</view>
+    <view class="input-row">
+      <input class="input" placeholder="如 TR202504120001" value="{{traceId}}" bindinput="onTraceIdInput" />
+      <button class="random-btn" bindtap="generateRandomId">随机生成</button>
+    </view>
+    <view class="hint">* 建议使用唯一编号，便于追溯</view>
+  </view>
+
+  <!-- 关联商品选择卡片 -->
+  <view class="form-card">
+    <view class="form-label">关联商品（可选）</view>
+    <picker range="{{goodsList}}" range-key="name" bindchange="onGoodsChange">
+      <view class="picker-value">{{selectedGoodsName || '请选择商品'}}</view>
+    </picker>
+  </view>
+
+  <!-- 生成按钮 -->
+  <button class="generate-btn" bindtap="generateCode">生成溯源码</button>
+
+  <!-- 二维码预览卡片 -->
+  <view class="qrcode-card" wx:if="{{qrCodeFileID}}">
+    <image class="qrcode-img" src="{{qrCodeFileID}}" mode="widthFix" show-menu-by-longpress></image>
+    <view class="qrcode-actions">
+      <button class="action-btn" bindtap="saveToAlbum">保存到相册</button>
+      <button class="action-btn" bindtap="copyFileID">复制 FileID</button>
+    </view>
+  </view>
+</view>

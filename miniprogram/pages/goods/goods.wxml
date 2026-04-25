@@ -1,0 +1,65 @@
+<view class="goods-page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input placeholder="🔍 搜索赣南脐橙..." bindinput="onSearchInput" />
+  </view>
+
+  <!-- 商品网格 -->
+  <view class="goods-grid">
+    <view class="goods-card" wx:for="{{goodsList}}" wx:key="_id" bindtap="gotoDetail" data-id="{{item._id}}">
+      <image class="goods-image" src="{{item.image}}" mode="aspectFill"></image>
+      <view class="goods-info">
+        <text class="goods-name">{{item.name}}</text>
+        <view class="price-wrapper">
+          <text class="goods-price">¥{{item.price}}</text>
+          <view class="add-cart-icon" catchtap="addToCart" data-id="{{item._id}}" data-name="{{item.name}}" data-price="{{item.price}}" data-image="{{item.image}}">
+            <text class="icon-text">+</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:if="{{goodsList.length === 0}}" class="empty">暂无商品</view>
+
+  <!-- 规格选择弹窗（用于商城页快速加购） -->
+    <view class="sku-popup" wx:if="{{showSkuPopup}}" catchtap="closeSkuPopup">
+    <view class="popup-content" catchtap="stopPropagation">
+        <view class="popup-header">
+        <image class="popup-goods-img" src="{{selectedSku.image}}" mode="aspectFill"></image>
+        <view class="popup-goods-info">
+            <text class="price">¥{{selectedSku.price}}</text>
+            <text class="stock">库存充足</text>
+            <text class="selected-sku">已选：{{selectedSku.name}}</text>
+        </view>
+        <view class="close-icon" catchtap="closeSkuPopup">×</view>
+        </view>
+        <view class="sku-title">选择款式</view>
+        <view class="sku-list">
+        <view 
+            wx:for="{{currentGoods.variants}}" 
+            wx:key="id" 
+            class="sku-item {{selectedSku.id === item.id ? 'active' : ''}}"
+            catchtap="selectGoodsSku"
+            data-sku="{{item}}"
+        >
+            <image src="{{item.image}}" mode="aspectFill"></image>
+            <text>{{item.name}}</text>
+            <text class="sku-price">¥{{item.price}}</text>
+        </view>
+        </view>
+        <view class="popup-footer">
+        <view class="quantity-stepper">
+            <text>数量</text>
+            <view class="stepper">
+            <view class="stepper-btn" catchtap="decreaseSkuQuantity">-</view>
+            <text class="stepper-num">{{skuQuantity}}</text>
+            <view class="stepper-btn" catchtap="increaseSkuQuantity">+</view>
+            </view>
+        </view>
+        <button class="confirm-btn" catchtap="confirmSkuAdd">确定</button>
+        </view>
+    </view>
+    </view>
+</view>

@@ -1,0 +1,111 @@
+<view class="page">
+  <view class="tips">
+    <text class="tips-title">管理员编辑：goods_products 全字段</text>
+    <text>此页面为可视化编辑，保存后直接写入数据库对应文档。</text>
+  </view>
+
+  <view class="card">
+    <view class="row readonly">
+      <text class="label">文档 ID</text>
+      <text class="value">{{id}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">基础信息</view>
+
+    <view class="field">
+      <text class="label">商品名称</text>
+      <input class="input" value="{{form.name}}" data-field="name" bindinput="onInput" placeholder="请输入商品名称" />
+    </view>
+
+    <view class="field two-col">
+      <view class="col">
+        <text class="label">价格</text>
+        <input class="input" type="digit" value="{{form.price}}" data-field="price" bindinput="onInput" placeholder="如 39.9" />
+      </view>
+      <view class="col">
+        <text class="label">销量</text>
+        <input class="input" type="number" value="{{form.sales}}" data-field="sales" bindinput="onInput" placeholder="如 0" />
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="label">主图 image</text>
+      <input class="input" value="{{form.image}}" data-field="image" bindinput="onInput" placeholder="cloud://..." />
+    </view>
+
+    <view class="field">
+      <text class="label">图片列表 images（每行一个，或逗号分隔）</text>
+      <textarea class="textarea small" value="{{form.imagesText}}" data-field="imagesText" bindinput="onInput" maxlength="-1" />
+    </view>
+
+    <view class="field">
+      <text class="label">商品描述</text>
+      <textarea class="textarea" value="{{form.desc}}" data-field="desc" bindinput="onInput" maxlength="-1" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">状态与归属</view>
+
+    <view class="field two-col">
+      <view class="col">
+        <text class="label">状态 status</text>
+        <picker mode="selector" range="{{statusOptions}}" value="{{form.statusIndex}}" bindchange="onStatusChange">
+          <view class="picker">{{statusOptions[form.statusIndex]}}</view>
+        </picker>
+      </view>
+      <view class="col">
+        <text class="label">上架 onShelf</text>
+        <switch checked="{{form.onShelf}}" data-field="onShelf" bindchange="onSwitchChange" color="#ff6600" />
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="label">所属 ownerOpenid</text>
+      <input class="input" value="{{form.ownerOpenid}}" data-field="ownerOpenid" bindinput="onInput" placeholder="openid" />
+    </view>
+
+    <view class="field">
+      <text class="label">自定义ID customId</text>
+      <input class="input" type="number" value="{{form.customId}}" data-field="customId" bindinput="onInput" placeholder="如 101" />
+    </view>
+
+    <view class="field">
+      <text class="label">驳回原因 rejectReason</text>
+      <textarea class="textarea small" value="{{form.rejectReason}}" data-field="rejectReason" bindinput="onInput" maxlength="-1" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">规格与扩展</view>
+
+    <view class="field switch-row">
+      <text class="label">是否多规格 isMultiSpec</text>
+      <switch checked="{{form.isMultiSpec}}" data-field="isMultiSpec" bindchange="onSwitchChange" color="#ff6600" />
+    </view>
+
+    <view class="field switch-row">
+      <text class="label">生成溯源码 generateTraceCode</text>
+      <switch checked="{{form.generateTraceCode}}" data-field="generateTraceCode" bindchange="onSwitchChange" color="#ff6600" />
+    </view>
+
+    <view class="field">
+      <text class="label">规格 specs（JSON 数组）</text>
+      <textarea class="textarea code" value="{{form.specsText}}" data-field="specsText" bindinput="onInput" maxlength="-1" />
+    </view>
+
+    <view class="field">
+      <text class="label">扩展字段（JSON 对象）</text>
+      <text class="hint">用于编辑上面未展示的其它字段，键值会合并写入文档</text>
+      <textarea class="textarea code" value="{{form.extraJson}}" data-field="extraJson" bindinput="onInput" maxlength="-1" />
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="save-btn" bindtap="onSave" disabled="{{submitting || loading}}">
+      {{submitting ? '保存中...' : '保存修改'}}
+    </button>
+  </view>
+</view>

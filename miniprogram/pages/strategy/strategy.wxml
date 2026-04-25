@@ -1,0 +1,25 @@
+<view class="strategy">
+  <!-- 顶部banner -->
+  <!-- <view class="banner">
+    <image src="/images/strategy_banner.jpg" mode="widthFix"></image>
+  </view> -->
+
+  <!-- 文章列表 -->
+  <view class="article-list">
+    <view class="article" wx:for="{{articles}}" wx:key="_id" bindtap="viewDetail" data-item="{{item}}">
+      <image src="{{item.cover}}" mode="aspectFill"></image>
+      <view class="text">
+        <text class="title">{{item.title}}</text>
+        <text class="summary">{{item.summary}}</text>
+        <view class="meta">
+          <text class="date">{{item.createTime}}</text>
+          <text class="views">{{item.views || 0}}人看过</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:elif="{{articles.length === 0}}" class="empty">暂无攻略，敬请期待~</view>
+</view>

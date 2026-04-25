@@ -1,0 +1,153 @@
+<!-- pages/reservationDetail/reservationDetail.wxml -->
+<view class="container">
+  <view class="status-card">
+    <view class="status-tag {{statusClass}}">
+      <text>{{statusText}}</text>
+    </view>
+    <text class="order-no">预约编号：{{reservation.reservationNo || '---'}}</text>
+  </view>
+
+  <view class="section" wx:if="{{reservation.type === 'course'}}">
+    <text class="section-title">课程信息</text>
+    <view class="course-info">
+      <image class="course-image" src="{{reservation.courseImage}}" mode="aspectFill"></image>
+      <view class="course-details">
+        <text class="course-name">{{reservation.courseName}}</text>
+        <view class="course-price">
+          <text class="price">¥{{reservation.coursePrice}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{reservation.type === 'course'}}">
+    <text class="section-title">预约信息</text>
+
+    <view class="info-item">
+      <text class="label">出行时间</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.travelDate}}</view>
+      <picker wx:else mode="date" start="{{minDate}}" end="{{maxDate}}" value="{{formData.travelDate}}" bindchange="onDateChange">
+        <view class="picker-value">{{formData.travelDate || '请选择'}}</view>
+      </picker>
+    </view>
+
+    <view class="info-item">
+      <text class="label">出行人数</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.peopleCount}}</view>
+      <picker wx:else mode="selector" range="{{peopleOptions}}" value="{{peopleIndex}}" bindchange="onPeopleChange">
+        <view class="picker-value">{{formData.peopleCount || '请选择'}}</view>
+      </picker>
+    </view>
+
+    <view class="info-item">
+      <text class="label">课程类型</text>
+      <view wx:if="{{!isEditing}}" class="value {{!reservation.courseType ? 'empty' : ''}}">{{reservation.courseType || '未填写'}}</view>
+      <input wx:else class="input-value" placeholder="请输入课程类型" value="{{formData.courseType}}" bindinput="onInputChange" data-field="courseType" />
+    </view>
+
+    <view class="info-item">
+      <text class="label required">联系人</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.contactName}}</view>
+      <input wx:else class="input-value" placeholder="请输入联系人" value="{{formData.contactName}}" bindinput="onInputChange" data-field="contactName" />
+    </view>
+
+    <view class="info-item">
+      <text class="label">紧急联系人</text>
+      <view wx:if="{{!isEditing}}" class="value {{!reservation.emergencyContact ? 'empty' : ''}}">{{reservation.emergencyContact || '未填写'}}</view>
+      <input wx:else class="input-value" placeholder="请输入紧急联系人" value="{{formData.emergencyContact}}" bindinput="onInputChange" data-field="emergencyContact" />
+    </view>
+
+    <view class="info-item">
+      <text class="label required">联系电话</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.contactPhone}}</view>
+      <input wx:else class="input-value" type="number" placeholder="请输入联系电话" value="{{formData.contactPhone}}" bindinput="onInputChange" data-field="contactPhone" maxlength="11" />
+    </view>
+
+    <view class="info-item">
+      <text class="label">紧急联系电话</text>
+      <view wx:if="{{!isEditing}}" class="value {{!reservation.emergencyPhone ? 'empty' : ''}}">{{reservation.emergencyPhone || '未填写'}}</view>
+      <input wx:else class="input-value" type="number" placeholder="请输入紧急联系电话" value="{{formData.emergencyPhone}}" bindinput="onInputChange" data-field="emergencyPhone" maxlength="11" />
+    </view>
+
+    <view class="info-item">
+      <text class="label required">单位</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.organization}}</view>
+      <input wx:else class="input-value" placeholder="请输入单位名称" value="{{formData.organization}}" bindinput="onInputChange" data-field="organization" />
+    </view>
+
+    <view class="info-item">
+      <text class="label">备注</text>
+      <view wx:if="{{!isEditing}}" class="value {{!reservation.remarks ? 'empty' : ''}}">{{reservation.remarks || '无'}}</view>
+      <textarea wx:else class="textarea-value" placeholder="请输入备注" value="{{formData.remarks}}" bindinput="onInputChange" data-field="remarks" maxlength="200" />
+    </view>
+
+    <view class="info-item total">
+      <text class="label">总价</text>
+      <text class="price">¥{{reservation.totalPrice}}</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{reservation.type !== 'course'}}">
+    <text class="section-title">采摘预约信息</text>
+
+    <view class="info-item">
+      <text class="label required">预约人</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.name}}</view>
+      <input wx:else class="input-value" placeholder="请输入预约人姓名" value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+    </view>
+
+    <view class="info-item">
+      <text class="label required">手机号</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.phone}}</view>
+      <input wx:else class="input-value" type="number" placeholder="请输入手机号" value="{{formData.phone}}" bindinput="onInputChange" data-field="phone" maxlength="11" />
+    </view>
+
+    <view class="info-item">
+      <text class="label required">预约日期</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.date}}</view>
+      <picker wx:else mode="date" start="{{minDate}}" end="{{maxDate}}" value="{{formData.date}}" bindchange="onPickDateChange">
+        <view class="picker-value">{{formData.date || '请选择'}}</view>
+      </picker>
+    </view>
+
+    <view class="info-item">
+      <text class="label required">人数</text>
+      <view wx:if="{{!isEditing}}" class="value">{{reservation.people}}</view>
+      <picker wx:else mode="selector" range="{{peopleOptions}}" value="{{peopleIndex}}" bindchange="onPickPeopleChange">
+        <view class="picker-value">{{formData.people || '请选择'}}</view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="footer-bar">
+    <view wx:if="{{!isEditing && canPay}}" class="agreement-row">
+      <checkbox-group bindchange="onAgreementChange" class="agreement-group">
+        <label class="agreement-label">
+          <checkbox value="agree" color="#FF6600" checked="{{agreed}}" />
+          <text>我已同意</text>
+        </label>
+      </checkbox-group>
+      <text class="agreement-link" bindtap="openOrderAgreement">《预约订单协议》</text>
+      <text class="agreement-link" bindtap="openSafetyNotice">《游客安全须知》</text>
+    </view>
+
+    <view wx:if="{{!isEditing && canPay}}" class="action-block">
+      <button class="pay-btn" bindtap="payNow">确认付款</button>
+      <view class="secondary-actions">
+        <button class="edit-btn" bindtap="toggleEdit">修改信息</button>
+        <button class="cancel-btn" bindtap="cancelReservation">取消预约</button>
+      </view>
+    </view>
+
+    <view wx:elif="{{isEditing}}" class="action-block">
+      <view class="secondary-actions">
+        <button class="cancel-btn" bindtap="toggleEdit">取消</button>
+        <button class="save-btn" bindtap="saveEdit">保存</button>
+      </view>
+    </view>
+
+    <view wx:elif="{{reservation && reservation.status === 'paid'}}" class="action-block">
+      <button class="cancel-btn single-btn" bindtap="cancelReservation">取消预约</button>
+    </view>
+  </view>
+</view>

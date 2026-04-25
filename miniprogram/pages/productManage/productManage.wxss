@@ -1,0 +1,149 @@
+.page {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding-bottom: 24rpx;
+}
+
+.tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1rpx solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.tab-item.active {
+  color: #ff6600;
+  font-weight: 600;
+  border-bottom: 4rpx solid #ff6600;
+}
+
+.list {
+  padding: 20rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top {
+  margin-bottom: 14rpx;
+}
+
+.name {
+  flex: 1;
+  color: #222;
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-right: 12rpx;
+}
+
+.price {
+  color: #ff6600;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.meta {
+  margin-bottom: 10rpx;
+  color: #666;
+  font-size: 24rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions {
+  margin-top: 18rpx;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16rpx;
+}
+
+.btn {
+  margin: 0;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  line-height: 56rpx;
+  height: 56rpx;
+  padding: 0 26rpx;
+  border: none;
+}
+
+.btn-delete {
+  background: #ff4d4f;
+  color: #fff;
+}
+
+.btn-edit {
+  background: #ff6600;
+  color: #fff;
+}
+
+.btn-up {
+  background: #ff6600;
+  color: #fff;
+}
+
+.btn-down {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-resubmit {
+  background: #ff4d4f;
+  color: #fff;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 160rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 浮动添加按钮 */
+.fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 50%;
+  transform: translateY(50%);
+  width: 112rpx;
+  height: 112rpx;
+  background: #ff6600;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(255, 102, 0, 0.4);
+  z-index: 100;
+}
+
+.fab text {
+  color: #fff;
+  font-size: 64rpx;
+  line-height: 1;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

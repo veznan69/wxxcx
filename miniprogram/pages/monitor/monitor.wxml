@@ -1,0 +1,32 @@
+<view class="monitor-page">
+  <view class="video-container">
+    <view wx:if="{{!videoUrl}}" class="video-placeholder-wrap">
+      <image class="video-placeholder" src="{{placeholderImage}}" mode="aspectFill"></image>
+      <text class="loading-text">正在加载监控视频...</text>
+    </view>
+    <video class="monitor-video" src="{{videoUrl}}" wx:else autoplay controls></video>
+  </view>
+
+  <view class="tree-info-card">
+    <view class="info-item">
+      <text class="label">果树编号</text>
+      <text class="value">{{treeInfo.treeNo}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">认养时间</text>
+      <text class="value">{{treeInfo.adoptTime}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">生长状态</text>
+      <text class="value">{{treeInfo.growthStatus}}</text>
+    </view>
+  </view>
+
+  <view class="action-buttons">
+    <view class="action-col">
+      <button class="action-btn" bindtap="takeScreenshot">截图</button>
+      <button class="action-btn action-btn-secondary">图册</button>
+    </view>
+    <button class="action-btn action-btn-camera" bindtap="switchCamera">切换摄像头</button>
+  </view>
+</view>

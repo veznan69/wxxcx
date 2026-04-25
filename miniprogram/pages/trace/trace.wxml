@@ -1,0 +1,75 @@
+<!-- pages/trace/trace.wxml -->
+<view class="trace-page">
+  <view class="header">
+    <!-- 头图 -->
+    <image class="orchard-img" src="{{traceInfo.bannerImage}}" mode="aspectFill"></image>
+    <view class="title">{{'赣南脐橙'}}</view>
+  </view>
+
+  <!-- 信息卡片 -->
+  <view class="info-card">
+    <view class="info-item">
+      <text class="label">果园</text>
+      <text class="value">{{traceInfo.orchard}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">种植时间</text>
+      <text class="value">{{traceInfo.plantTime}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">落花期</text>
+      <text class="value">{{traceInfo.floweringPeriod}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">挂果期</text>
+      <text class="value">{{traceInfo.fruitSettingPeriod}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">采摘时间</text>
+      <text class="value">{{traceInfo.harvestTime}}</text>
+    </view>
+  </view>
+
+  <!-- 产品描述 -->
+  <view class="desc-card">
+    <text class="desc-title">产品描述</text>
+    <text class="desc-content">{{traceInfo.description}}</text>
+  </view>
+
+<!-- ========== 新增：区块链存证信息卡片 ========== -->
+<view class="blockchain-card">
+  <view class="card-header">
+    <text class="card-icon">⛓️</text>
+    <text class="card-title">区块链存证信息</text>
+    <text class="tag-onshore">已上链</text>
+  </view>
+  <view class="info-list">
+    <view class="info-item">
+      <text class="label">交易哈希</text>
+      <text class="value hash">{{blockchainInfo.txHash}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">区块高度</text>
+      <text class="value">{{blockchainInfo.blockHeight}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">上链时间</text>
+      <text class="value">{{blockchainInfo.timestamp}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">存证机构</text>
+      <text class="value">蚂蚁链（AntChain）</text>
+    </view>
+  </view>
+</view>
+
+<!-- ========== 新增：政府平台对接证明 ========== -->
+<view class="gov-card" bindtap="previewGovCert">
+  <image src="{{govCertImage}}" mode="aspectFill" class="cert-thumb"></image>
+  <view class="cert-text">
+    <text class="cert-title">国家农产品质量安全追溯平台</text>
+    <text class="cert-desc">已对接 · 备案编号：GZ-2024-0912</text>
+  </view>
+  <text class="arrow">›</text>
+</view>
+</view>

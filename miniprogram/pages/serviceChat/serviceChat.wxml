@@ -1,0 +1,67 @@
+<view class="chat-container">
+  <!-- 消息列表 -->
+  <scroll-view 
+    class="message-list" 
+    scroll-y 
+    scroll-into-view="{{toView}}"
+    scroll-with-animation
+  >
+    <view 
+      wx:for="{{messages}}" 
+      wx:key="id" 
+      id="msg-{{item.id}}"
+      class="message-item {{item.isSelf ? 'self' : 'other'}}"
+    >
+      <!-- 对方消息 -->
+      <view wx:if="{{!item.isSelf}}" class="message-wrapper other-wrapper">
+        <image class="avatar other-avatar" src="/images/icons/avatar.png" mode="aspectFill"></image>
+        <view class="message-bubble other-bubble">
+          <text class="message-text">{{item.content}}</text>
+        </view>
+      </view>
+
+      <!-- 自己的消息 -->
+      <view wx:if="{{item.isSelf}}" class="message-wrapper self-wrapper">
+        <view class="message-bubble self-bubble">
+          <text class="message-text">{{item.content}}</text>
+        </view>
+        <image class="avatar self-avatar" src="/images/icons/avatar.png" mode="aspectFill"></image>
+      </view>
+      
+      <!-- 时间显示（每5条消息显示一次时间） -->
+      <view wx:if="{{item.showTime}}" class="message-time">
+        <text>{{item.timeStr}}</text>
+      </view>
+    </view>
+    
+    <!-- 加载更多提示 -->
+    <view wx:if="{{loading}}" class="loading-more">
+      <text>加载中...</text>
+    </view>
+    
+    <!-- 底部占位，让消息不会被输入框遮挡 -->
+    <view class="bottom-placeholder"></view>
+  </scroll-view>
+
+  <!-- 底部输入框 -->
+  <view class="input-bar">
+    <input 
+      class="message-input" 
+      value="{{inputText}}"
+      bindinput="onInput"
+      placeholder="输入消息..."
+      confirm-type="send"
+      bindconfirm="sendMessage"
+      maxlength="500"
+      cursor-spacing="10"
+    />
+    <button 
+      class="send-btn {{!inputText ? 'disabled' : ''}}" 
+      bindtap="sendMessage" 
+      size="mini"
+      disabled="{{!inputText}}"
+    >
+      发送
+    </button>
+  </view>
+</view>

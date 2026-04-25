@@ -1,0 +1,49 @@
+<view class="container">
+  <!-- 头部标题 -->
+  <view class="header">
+    <view class="title">🍊 核销中心</view>
+    <view class="subtitle">支持认养 / 课程核销</view>
+  </view>
+
+  <!-- 核销码输入卡片 -->
+  <view class="card">
+    <view class="card-title">输入核销码</view>
+    <input 
+      class="code-input" 
+      placeholder="请输入6位核销码" 
+      value="{{verifyCode}}" 
+      bindinput="onCodeInput" 
+      maxlength="20"
+      focus="{{inputFocus}}"
+      type="text"
+      confirm-type="done"
+      bindconfirm="doVerify"
+    />
+    <view class="hint">核销码可从用户出示的凭证中获取</view>
+  </view>
+
+  <!-- 操作按钮组 -->
+  <view class="button-group">
+    <button class="primary-btn" bindtap="doVerify" loading="{{verifying}}">确认核销</button>
+    <button class="secondary-btn" bindtap="scanCode">📷 扫码输入</button>
+  </view>
+
+  <!-- 最近核销记录（可选，增强体验） -->
+  <view class="history" wx:if="{{recentVerifications.length > 0}}">
+    <view class="history-title">最近核销</view>
+    <view class="history-list">
+      <view class="history-item" wx:for="{{recentVerifications}}" wx:key="index">
+        <view class="history-code">{{item.code}}</view>
+        <view class="history-type">{{item.type}}</view>
+        <view class="history-time">{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 权限提示（未登录或非商家时显示） -->
+  <view class="permission-deny" wx:if="{{!hasPermission}}">
+    <view class="deny-icon">⚠️</view>
+    <view class="deny-text">{{permissionMsg}}</view>
+    <button class="deny-btn" bindtap="goToUser">去登录/认证</button>
+  </view>
+</view>

@@ -1,0 +1,39 @@
+<view class="verify-page">
+  <!-- 权益选择 -->
+  <view class="benefit-select">
+    <view class="section-title">选择要核销的权益</view>
+    <view class="benefit-tabs">
+      <view class="tab-item {{currentTab === index ? 'active' : ''}}" 
+            wx:for="{{benefitList}}" wx:key="index"
+            bindtap="switchTab" data-index="{{index}}">
+        {{item.name}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 权益详情 -->
+  <view class="benefit-detail">
+    <view class="benefit-card">
+      <view class="benefit-status {{currentBenefit.status}}">
+        {{currentBenefit.status === 'unused' ? '未核销' : '已核销'}}
+      </view>
+      <view class="benefit-info">
+        <text class="benefit-name">{{currentBenefit.name}}</text>
+        <text class="benefit-desc">{{currentBenefit.desc}}</text>
+        <text class="valid-time">有效期至：{{currentBenefit.validTime}}</text>
+      </view>
+    </view>
+
+    <!-- 未核销时显示核销码 -->
+    <view class="code-section" wx:if="{{currentBenefit.status === 'unused'}}">
+      <view class="code-title">核销码</view>
+      <view class="code-box">{{currentBenefit.code}}</view>
+      <view class="code-tip">请向工作人员出示此码</view>
+    </view>
+
+    <!-- 已核销提示 -->
+    <view class="used-tip" wx:else>
+      <text class="used-text">该权益已于 {{currentBenefit.usedTime}} 核销完成</text>
+    </view>
+  </view>
+</view>

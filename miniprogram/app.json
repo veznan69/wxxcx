@@ -1,0 +1,89 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/goods/goods",
+    "pages/detail/detail",
+    "pages/reviews/reviews",
+    "pages/orchard/orchard",
+    "pages/pick/pick",
+    "pages/study/study",
+    "pages/strategy/strategy",
+    "pages/cart/cart",
+    "pages/order/order",
+    "pages/coupon/coupon",
+    "pages/user/user",
+    "pages/login/login",
+    "pages/orders/orders",
+    "pages/myadopt/myadopt",
+    "pages/verify/verify",
+    "pages/monitor/monitor",
+    "pages/merchantApply/merchantApply",
+    "pages/admin/merchantReview/merchantReview",
+    "pages/admin/goodsReview/goodsReview",
+    "pages/admin/goodsFullEdit/goodsFullEdit",
+    "pages/trace/trace",
+    "pages/admin/traceGenerator/traceGenerator",
+    "pages/admin/verify/verify",
+    "pages/studyDetail/studyDetail",
+    "pages/myreserve/myreserve",
+    "pages/courseReservation/courseReservation",
+    "pages/reservationDetail/reservationDetail",
+    "pages/orderAgreement/orderAgreement",
+    "pages/safetyNotice/safetyNotice",
+    "pages/productManage/productManage",
+    "pages/editGoods/editGoods",
+    "pages/addGoods/addGoods",
+    "pages/orderManage/orderManage",
+    "pages/orderShip/orderShip",
+    "pages/logisticsTrace/logisticsTrace",
+    "pages/myMessages/myMessages",
+    "pages/serviceChat/serviceChat",
+    "pages/youquan/youquan",
+    "pages/publishPost/publishPost",
+    "pages/postDetail/postDetail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#FF6600",
+    "navigationBarTitleText": "碧峰峡生态果园",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F5F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF6600",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./images/tabbar/house.png",
+        "selectedIconPath": "./images/tabbar/house-active.png"
+      },
+      {
+        "pagePath": "pages/goods/goods",
+        "text": "商城",
+        "iconPath": "./images/tabbar/package.png",
+        "selectedIconPath": "./images/tabbar/package-active.png"
+      },
+      {
+        "pagePath": "pages/youquan/youquan",
+        "text": "橙友圈",
+        "iconPath": "./images/tabbar/users.png",
+        "selectedIconPath": "./images/tabbar/users-active.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "购物车",
+        "iconPath": "./images/tabbar/shopping-cart.png",
+        "selectedIconPath": "./images/tabbar/shopping-cart-active.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "./images/tabbar/user.png",
+        "selectedIconPath": "./images/tabbar/user-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

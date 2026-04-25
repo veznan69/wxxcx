@@ -1,0 +1,60 @@
+<view class="page">
+  <view class="tabs" wx:if="{{isAdmin}}">
+    <view class="tab-item {{activeTab === 'my' ? 'active' : ''}}" data-tab="my" bindtap="onTabChange">我的商品</view>
+    <view class="tab-item {{activeTab === 'all' ? 'active' : ''}}" data-tab="all" bindtap="onTabChange">全部商品</view>
+  </view>
+
+  <view class="list" wx:if="{{list.length}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="row top">
+        <text class="name">{{item.name || '未命名商品'}}</text>
+        <text class="price">¥{{item.price || 0}}</text>
+      </view>
+
+      <view class="meta">
+        <text>审核：{{item.statusText}}</text>
+        <text>状态：{{item.shelfText}}</text>
+      </view>
+
+      <view class="meta" wx:if="{{isAdmin && activeTab === 'all'}}">
+        <text>归属商家：{{item.ownerOpenid || '-'}}</text>
+      </view>
+
+      <view class="actions">
+        <button
+          class="btn btn-edit"
+          data-id="{{item._id}}"
+          data-status="{{item.status}}"
+          bindtap="onEditGoods"
+        >
+          编辑商品
+        </button>
+        <button
+          class="btn {{item.onShelf ? 'btn-down' : 'btn-up'}} {{item.status === 'rejected' ? 'btn-resubmit' : ''}}"
+          data-id="{{item._id}}"
+          data-onshelf="{{item.onShelf}}"
+          data-status="{{item.status}}"
+          bindtap="onToggleShelf"
+        >
+          {{item.status === 'rejected' ? '再次提交' : (item.onShelf ? '下架商品' : '上架商品')}}
+        </button>
+        <button
+          class="btn btn-delete"
+          data-id="{{item._id}}"
+          bindtap="onDeleteGoods"
+        >
+          删除商品
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <text>{{loading ? '加载中...' : '暂无商品'}}</text>
+  </view>
+
+  <!-- 右下角添加按钮 -->
+  <view class="fab" bindtap="onAddGoods">
+    <text>+</text>
+  </view>
+</view>

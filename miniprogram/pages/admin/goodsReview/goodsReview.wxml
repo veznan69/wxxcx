@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="list" wx:if="{{list.length}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="header">
+        <text class="name">{{item.name || '未命名商品'}}</text>
+        <text class="price">{{item.priceText}}</text>
+      </view>
+
+      <view class="meta">
+        <text>商家：{{item.ownerOpenid || '-'}}</text>
+      </view>
+      <view class="meta">
+        <text>提交时间：{{item.createdText || '-'}}</text>
+      </view>
+
+      <view class="actions">
+        <button class="btn btn-reject" size="mini" data-id="{{item._id}}" bindtap="onReject">驳回</button>
+        <button class="btn btn-approve" size="mini" data-id="{{item._id}}" bindtap="onApprove">通过并上架</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <text>{{loading ? '加载中...' : '暂无待审核商品'}}</text>
+  </view>
+</view>

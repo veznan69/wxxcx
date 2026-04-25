@@ -1,0 +1,56 @@
+<view class="container">
+  <!-- 地址列表 -->
+  <view wx:if="{{addressList.length > 0}}">
+    <view class="address-item" wx:for="{{addressList}}" wx:key="_id">
+      <view class="address-info" bindtap="selectAddress" data-address="{{item}}">
+        <view class="contact">
+          <text class="name">{{item.name}}</text>
+          <text class="phone">{{item.phone}}</text>
+        </view>
+        <view class="detail">
+          {{item.province}}{{item.city}}{{item.district}} {{item.detail}}
+        </view>
+        <view class="tag-wrap">
+          <text class="default-tag" wx:if="{{item.isDefault}}">默认</text>
+        </view>
+      </view>
+      <view class="actions">
+        <text class="action-btn" bindtap="editAddress" data-address="{{item}}">编辑</text>
+        <text class="action-btn" bindtap="deleteAddress" data-id="{{item._id}}">删除</text>
+        <text class="action-btn" wx:if="{{!item.isDefault}}" bindtap="setDefault" data-id="{{item._id}}">设为默认</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-tip">暂无收货地址，请点击下方按钮添加</view>
+
+  <!-- 新建地址按钮 -->
+  <view class="add-btn" bindtap="addAddress">
+    <text>+ 新建收货地址</text>
+  </view>
+
+  <!-- 地址编辑弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="hideModal"></view>
+  <view class="modal-content" wx:if="{{showModal}}">
+    <view class="modal-title">{{editingId ? '编辑地址' : '新增地址'}}</view>
+    <view class="form-item">
+      <input placeholder="收货人姓名" value="{{formData.name}}" bindinput="onNameInput" />
+    </view>
+    <view class="form-item">
+      <input placeholder="手机号码" type="number" value="{{formData.phone}}" bindinput="onPhoneInput" />
+    </view>
+    <view class="form-item picker-item" bindtap="pickRegion">
+      <text>{{formData.regionStr || '选择省市区'}}</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="form-item">
+      <input placeholder="详细地址" value="{{formData.detail}}" bindinput="onDetailInput" />
+    </view>
+    <view class="form-item checkbox-item">
+      <checkbox checked="{{formData.isDefault}}" bindtap="toggleDefault" />设为默认地址
+    </view>
+    <view class="modal-btns">
+      <button class="cancel-btn" bindtap="hideModal">取消</button>
+      <button class="confirm-btn" bindtap="saveAddress">保存</button>
+    </view>
+  </view>
+</view>

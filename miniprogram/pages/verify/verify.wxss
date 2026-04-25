@@ -1,0 +1,129 @@
+/* pages/verify/verify.wxss */
+.verify-page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+/* 权益标签页 */
+.benefit-tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 10rpx;
+  margin-bottom: 20rpx;
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+.tab-item.active {
+  background: #ff6600;
+  color: #fff;
+}
+
+/* 权益详情 */
+.benefit-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  position: relative;
+}
+.benefit-status {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+.benefit-status.unused {
+  background: #e6ffed;
+  color: #52c41a;
+}
+.benefit-status.used {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+.benefit-info {
+  margin-top: 20rpx;
+}
+.benefit-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+.benefit-desc {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 10rpx;
+}
+.valid-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 核销码 */
+.code-section {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  text-align: center;
+}
+.code-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+.code-box {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #ff6600;
+  letter-spacing: 10rpx;
+  margin-bottom: 30rpx;
+  padding: 20rpx;
+  background: #fff8f0;
+  border-radius: 12rpx;
+}
+.verify-btn {
+  background: #ff6600;
+  color: #fff;
+  border-radius: 50rpx;
+  width: 80%;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+}
+
+/* 已核销提示 */
+.used-tip {
+  text-align: center;
+  padding: 60rpx 0;
+}
+.used-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.code-tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 16rpx;
+}

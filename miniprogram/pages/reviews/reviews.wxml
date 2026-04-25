@@ -1,0 +1,17 @@
+<view class="reviews">
+  <view class="publish-btn" bindtap="publishReview">
+    <button type="primary" size="mini">发布买家秀</button>
+  </view>
+  <view wx:for="{{reviews}}" wx:key="_id" class="review-item">
+    <image class="avatar" src="{{item.avatar || '/images/avatar.png'}}"></image>
+    <view class="content">
+      <view class="nickname">{{item.nickName || '匿名用户'}}</view>
+      <view class="text">{{item.content}}</view>
+      <view class="images" wx:if="{{item.images && item.images.length}}">
+        <image wx:for="{{item.images}}" wx:key="index" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+      </view>
+      <view class="time">{{item.createTime}}</view>
+    </view>
+  </view>
+  <view wx:if="{{reviews.length===0}}" class="empty">暂无评价，快来发表你的买家秀吧~</view>
+</view>

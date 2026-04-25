@@ -1,0 +1,274 @@
+.page {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding-bottom: 32rpx;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.type-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 24rpx 20rpx 8rpx;
+  color: #666;
+  font-size: 26rpx;
+}
+
+.type-text {
+  color: #ff6600;
+  font-weight: 600;
+}
+
+.form {
+  padding: 20rpx;
+}
+
+.form-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.label {
+  color: #333;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 20rpx;
+}
+
+.input {
+  width: 100%;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #333;
+  border: none;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #333;
+  border: none;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.image-item {
+  position: relative;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.image-item image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-add {
+  width: 160rpx;
+  height: 160rpx;
+  border: 2rpx dashed #ddd;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  font-size: 60rpx;
+  color: #999;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 12rpx;
+}
+
+.delete-btn text {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.switch-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 0;
+}
+
+.switch-wrapper text {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.specs-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  color: #333;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 24rpx;
+}
+
+.spec-item {
+  padding: 20rpx;
+  border: 1rpx solid #f5f5f5;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  background: #fafafa;
+}
+
+.spec-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.spec-index {
+  color: #333;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.spec-delete {
+  color: #ff6600;
+  font-size: 24rpx;
+}
+
+.spec-field {
+  margin-bottom: 20rpx;
+}
+
+.field-label {
+  color: #333;
+  font-size: 26rpx;
+  margin-bottom: 12rpx;
+}
+
+.field-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.field-input {
+  flex: 1;
+  padding: 16rpx;
+  background: #fff;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+}
+
+.spec-image-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.spec-image-item {
+  position: relative;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.spec-image-item image {
+  width: 100%;
+  height: 100%;
+}
+
+.spec-image-add {
+  width: 120rpx;
+  height: 120rpx;
+  border: 2rpx dashed #ddd;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  font-size: 50rpx;
+  color: #999;
+}
+
+.add-spec-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24rpx;
+  background: #fff7e6;
+  border: 2rpx dashed #ff6600;
+  border-radius: 12rpx;
+  color: #ff6600;
+  font-size: 28rpx;
+}
+
+.tips {
+  margin-top: 16rpx;
+  padding: 16rpx;
+  background: #fff7e6;
+  border-radius: 8rpx;
+}
+
+.tips text {
+  color: #ff6600;
+  font-size: 24rpx;
+}
+
+.spec-tips {
+  margin-top: 20rpx;
+}
+
+.btn-wrapper {
+  padding: 40rpx 20rpx 0;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #ff6600;
+  color: #fff;
+  font-size: 32rpx;
+  border: none;
+  border-radius: 44rpx;
+  font-weight: 600;
+}
+
+.submit-btn.disabled {
+  background: #ccc;
+  color: #fff;
+}

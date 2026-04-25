@@ -1,0 +1,38 @@
+<view class="page">
+  <view class="card" wx:if="{{order}}">
+    <view class="header">
+      <text class="status">{{order.status}}</text>
+      <text class="time">{{order.createTimeStr}}</text>
+    </view>
+    <view class="id">订单ID：{{order._id}}</view>
+  </view>
+
+  <view class="card" wx:if="{{order}}">
+    <view class="title">订单商品</view>
+    <view class="item" wx:for="{{order.items}}" wx:key="goodsId">
+      <image class="img" src="{{item.image}}" mode="aspectFill"></image>
+      <view class="info">
+        <text class="name">{{item.name}}</text>
+        <text class="meta">¥{{item.price}} × {{item.num}}</text>
+      </view>
+    </view>
+    <view class="total">合计：¥{{order.totalPriceFixed}}</view>
+  </view>
+
+  <view class="card" wx:if="{{order}}">
+    <view class="title">物流信息</view>
+    <input
+      class="input"
+      placeholder="请输入国内物流公司，如：顺丰速运"
+      value="{{logisticsCompany}}"
+      bindinput="onCompanyInput"
+    />
+    <text class="hint">提交后将自动生成随机运单号，并将订单状态改为“已发货”。</text>
+  </view>
+
+  <view class="footer">
+    <button class="btn" bindtap="onSubmitShip" disabled="{{submitting || loading || !order}}">
+      {{submitting ? '发货中...' : '确认发货'}}
+    </button>
+  </view>
+</view>

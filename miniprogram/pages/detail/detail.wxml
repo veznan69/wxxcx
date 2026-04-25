@@ -1,0 +1,105 @@
+<view class="detail-page">
+  <!-- 商品轮播图 -->
+  <swiper class="swiper" indicator-dots autoplay circular>
+    <swiper-item wx:for="{{goods.images || [goods.image]}}" wx:key="index">
+      <image class="swiper-image" src="{{item}}" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 商品基本信息 -->
+  <view class="goods-info">
+    <view class="price-row">
+      <text class="price">¥{{goods.price}}</text>
+      <text class="sales">月销 {{goods.sales || 0}} 件</text>
+    </view>
+    <text class="name">{{goods.name}}</text>
+    <text class="desc">{{goods.desc}}</text>
+  </view>
+
+  <!-- 数量选择 -->
+  <view class="spec-quantity">
+    <view class="quantity">
+      <text>数量</text>
+      <view class="stepper">
+        <view class="stepper-btn" bindtap="subQuantity">-</view>
+        <text class="stepper-num">{{quantity}}</text>
+        <view class="stepper-btn" bindtap="addQuantity">+</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品详情描述 -->
+  <view class="detail-desc">
+    <view class="title">商品详情</view>
+    <rich-text nodes="{{goods.description || '暂无详情'}}" />
+  </view>
+
+  <!-- 溯源码展示区：仅当 showTraceSection 为 true 时显示 -->
+  <view class="qrcode-section" wx:if="{{showTraceSection}}">
+    <view class="qrcode-label">商品溯源码</view>
+    <view class="qrcode-box">
+      <image 
+        wx:if="{{traceCodeImage}}" 
+        class="qrcode-img" 
+        src="{{traceCodeImage}}" 
+        mode="aspectFit"
+        show-menu-by-longpress
+      ></image>
+      <view wx:else class="qrcode-loading">
+        <text>{{traceCodeLoading ? '生成中...' : '点击重试'}}</text>
+      </view>
+    </view>
+    <view class="qrcode-actions">
+      <button class="action-btn" bindtap="viewTrace" size="mini">查看溯源</button>
+      <button class="action-btn" bindtap="saveQRCodeToAlbum" size="mini">保存图片</button>
+    </view>
+    <text class="qrcode-tip">长按二维码可识别，扫码可追溯源头信息</text>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="contact" bindtap="contactService">客服</view>
+    <view class="cart" bindtap="addToCart">加入购物车</view>
+    <view class="buy" bindtap="buyNow">立即购买</view>
+  </view>
+
+  <!-- 款式选择弹窗（用于商品7、8） -->
+  <view class="sku-popup" wx:if="{{showSpecPopup}}" catchtap="hideSpecPopup">
+    <view class="popup-content" catchtap="stopPropagation">
+      <view class="popup-header">
+        <image class="popup-goods-img" src="{{goods.image}}" mode="aspectFill"></image>
+        <view class="popup-goods-info">
+          <text class="price">¥{{goods.price}}</text>
+          <text class="stock">库存充足</text>
+          <text class="selected-sku">已选：{{selectedSku.name}}</text>
+        </view>
+        <view class="close-icon" catchtap="hideSpecPopup">×</view>
+      </view>
+      <view class="sku-title">选择款式</view>
+      <view class="sku-list">
+        <view 
+          wx:for="{{skuList}}" 
+          wx:key="id" 
+          class="sku-item {{selectedSku.id === item.id ? 'active' : ''}}"
+          catchtap="selectSku"
+          data-sku="{{item}}"
+        >
+          <image src="{{item.image}}" mode="aspectFill"></image>
+          <text>{{item.name}}</text>
+          <text class="sku-price">¥{{item.price}}</text>
+        </view>
+      </view>
+      <view class="popup-footer">
+        <view class="quantity-stepper">
+          <text>数量</text>
+          <view class="stepper">
+            <view class="stepper-btn" catchtap="subQuantity">-</view>
+            <text class="stepper-num">{{quantity}}</text>
+            <view class="stepper-btn" catchtap="addQuantity">+</view>
+          </view>
+        </view>
+        <button class="confirm-btn" catchtap="confirmSku">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

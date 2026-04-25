@@ -1,0 +1,218 @@
+/* pages/goods/goods.wxss */
+.goods-page {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  padding: 20rpx 20rpx 40rpx;
+}
+
+/* 搜索栏 */
+.search-bar {
+  background: #fff;
+  border-radius: 60rpx;
+  padding: 16rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+.search-bar input {
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 商品网格两列 */
+.goods-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.goods-card {
+  width: calc(50% - 12rpx);
+  background: #fff;
+  border-radius: 24rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+.goods-card:active {
+  transform: scale(0.98);
+}
+
+.goods-image {
+  width: 100%;
+  height: 340rpx;
+  display: block;
+  background-color: #f5f5f5;
+}
+
+.goods-info {
+  padding: 20rpx 20rpx 24rpx;
+}
+
+.goods-name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 价格区域：价格左对齐，加购按钮右对齐 */
+.price-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goods-price {
+  color: #ff6600;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* 圆形加购按钮 */
+.add-cart-icon {
+  width: 64rpx;
+  height: 64rpx;
+  background: linear-gradient(135deg, #ff9944, #ff6600);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(255, 102, 0, 0.3);
+  transition: transform 0.2s;
+}
+.add-cart-icon:active {
+  transform: scale(0.92);
+}
+.icon-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #fff;
+  line-height: 1;
+  margin-top: -4rpx;
+}
+
+.empty {
+  text-align: center;
+  padding: 100rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+  /* 款式弹窗 */
+  .sku-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: flex-end;
+    z-index: 1000;
+  }
+  .popup-content {
+    background: #fff;
+    width: 100%;
+    border-radius: 40rpx 40rpx 0 0;
+    padding: 30rpx;
+    animation: slideUp 0.3s ease;
+  }
+  .popup-header {
+    display: flex;
+    margin-bottom: 30rpx;
+  }
+  .popup-goods-img {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 16rpx;
+    margin-right: 20rpx;
+  }
+  .popup-goods-info {
+    flex: 1;
+  }
+  .popup-goods-info .price {
+    font-size: 40rpx;
+    font-weight: bold;
+    color: #ff6600;
+    display: block;
+  }
+  .popup-goods-info .stock {
+    font-size: 24rpx;
+    color: #999;
+    display: block;
+    margin: 10rpx 0;
+  }
+  .popup-goods-info .selected-sku {
+    font-size: 26rpx;
+    color: #666;
+  }
+  .close-icon {
+    font-size: 48rpx;
+    color: #999;
+    padding: 0 10rpx;
+  }
+  .sku-title {
+    font-size: 30rpx;
+    font-weight: bold;
+    margin-bottom: 20rpx;
+  }
+  .sku-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30rpx;
+  }
+  .sku-item {
+    width: 200rpx;
+    margin-right: 20rpx;
+    margin-bottom: 20rpx;
+    text-align: center;
+    border: 2rpx solid #eee;
+    border-radius: 16rpx;
+    padding: 16rpx 0;
+    transition: all 0.2s;
+  }
+  .sku-item.active {
+    border-color: #ff6600;
+    background: #fff9f0;
+  }
+  .sku-item image {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 12rpx;
+    margin-bottom: 10rpx;
+  }
+  .sku-item text {
+    display: block;
+    font-size: 26rpx;
+    color: #333;
+  }
+  .sku-price {
+    color: #ff6600;
+    font-weight: bold;
+    margin-top: 6rpx;
+  }
+  .popup-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .quantity-stepper {
+    display: flex;
+    align-items: center;
+  }
+  .quantity-stepper text {
+    margin-right: 20rpx;
+  }
+  .confirm-btn {
+    background: #ff6600;
+    color: #fff;
+    border-radius: 40rpx;
+    padding: 16rpx 60rpx;
+    font-size: 30rpx;
+    border: none;
+  }

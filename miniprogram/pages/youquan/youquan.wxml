@@ -1,0 +1,70 @@
+<view class="container">
+  <!-- 空状态 -->
+  <view wx:if="{{posts.length === 0 && !loading}}" class="empty-state">
+    <image class="empty-icon" src="/images/icons/empty.png" mode="aspectFit"></image>
+    <text class="empty-text">还没有人分享内容</text>
+    <text class="empty-hint">点击右下角 + 分享你的故事</text>
+  </view>
+
+  <!-- 帖子列表 -->
+  <view wx:if="{{posts.length > 0}}" class="posts-list">
+    <view class="post-item" wx:for="{{posts}}" wx:key="_id" bindtap="onPostDetail" data-id="{{item._id}}">
+      <!-- 用户信息 -->
+      <view class="post-header">
+        <image class="user-avatar" src="{{item.userAvatar || '/images/icons/default-avatar.png'}}" mode="aspectFill"></image>
+        <view class="user-info">
+          <text class="user-name">{{item.userName || '橙友'}}</text>
+          <text class="post-time">{{item.formattedTime}}</text>
+        </view>
+      </view>
+
+      <!-- 帖子内容 -->
+      <view class="post-content">
+        <text wx:if="{{item.title}}" class="post-title">{{item.title}}</text>
+        <text class="post-text">{{item.truncatedContent}}</text>
+      </view>
+
+      <!-- 图片（只显示前3张） -->
+      <view wx:if="{{item.images && item.images.length > 0}}" class="post-images">
+        <image
+          class="post-image"
+          wx:for="{{item.images}}"
+          wx:for-item="img"
+          wx:key="*this"
+          src="{{img}}"
+          mode="aspectFill"
+          bindtap="onImagePreview"
+          data-urls="{{item.originalImages || item.images}}"
+          data-current="{{img}}"
+        ></image>
+        <!-- 超过3张显示剩余数量 -->
+        <view wx:if="{{item.imageCount > 3}}" class="more-images">
+          <text class="more-text">+{{item.imageCount - 3}}</text>
+        </view>
+      </view>
+
+      <!-- 帖子操作 -->
+      <!-- 帖子操作 -->
+      <view class="post-actions">
+        <view class="action-item" catchtap="onLikePost" data-id="{{item._id}}" data-liked="{{item.isLiked}}">
+          <text class="action-icon">{{item.isLiked ? '❤️' : '🤍'}}</text>
+          <text class="action-count">{{item.likeCount || 0}}</text>
+        </view>
+        <view class="action-item">
+          <text class="action-icon">💬</text>
+          <text class="action-count">{{item.commentCount || 0}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 右下角悬浮按钮（FAB） -->
+  <view class="fab-button" bindtap="onPublish">
+    <text class="fab-icon">+</text>
+  </view>
+</view>

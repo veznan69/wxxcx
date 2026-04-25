@@ -1,0 +1,43 @@
+<view class="page">
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 'pending' ? 'active' : ''}}" data-tab="pending" bindtap="onTabChange">待发货</view>
+    <view class="tab-item {{activeTab === 'shipped' ? 'active' : ''}}" data-tab="shipped" bindtap="onTabChange">已发货</view>
+    <view class="tab-item {{activeTab === 'completed' ? 'active' : ''}}" data-tab="completed" bindtap="onTabChange">已完成</view>
+  </view>
+
+  <view class="list" wx:if="{{list.length}}">
+    <view class="card" wx:for="{{list}}" wx:key="_id">
+      <view class="card-header">
+        <text class="status {{item.normalizedStatus}}">{{item.status}}</text>
+        <text class="time">{{item.createTimeStr}}</text>
+      </view>
+
+      <view class="items">
+        <view class="item" wx:for="{{item.items}}" wx:key="goodsId">
+          <image class="img" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="info">
+            <text class="name">{{item.name}}</text>
+            <text class="meta">¥{{item.price}} × {{item.num}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="card-footer">
+        <text class="total">合计：¥{{item.totalPriceFixed}}</text>
+        <button
+          wx:if="{{item.normalizedStatus === 'pending'}}"
+          class="ship-btn"
+          size="mini"
+          bindtap="goShip"
+          data-id="{{item._id}}"
+        >
+          发货
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <text>{{loading ? '加载中...' : (activeTab === 'pending' ? '暂无待发货订单' : (activeTab === 'shipped' ? '暂无已发货订单' : '暂无已完成订单'))}}</text>
+  </view>
+</view>

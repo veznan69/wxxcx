@@ -1,0 +1,10 @@
+{
+  "name": "refreshLogisticsTrace",
+  "version": "1.0.0",
+  "description": "refresh simulated logistics traces on query",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}
+

@@ -1,0 +1,286 @@
+/* pages/index/index.wxss */
+
+.swiper {
+  width: 100%;
+  height: 380rpx;
+}
+
+.banner-img {
+  width: 100%;
+}
+
+.science-entry {
+  margin: 20rpx 0;
+  background: linear-gradient(135deg, #ffcf8b, #ff9f4d);
+  border-radius: 20rpx;
+  padding: 30rpx;
+}
+
+.science-content .title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.science-content .sub {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 24rpx;
+  color: #fff7ef;
+}
+
+.experience-grid {
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  padding: 20rpx;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.grid-item {
+  text-align: center;
+}
+
+.grid-item image {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.grid-item text {
+  display: block;
+  font-size: 24rpx;
+}
+
+.hot-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin: 20rpx 0;
+}
+
+.goods-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.goods-card {
+  width: 48%;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.goods-card:active {
+  transform: scale(0.98);
+}
+
+.goods-card image {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+  display: block;
+}
+
+.goods-card .name {
+  display: block;
+  font-size: 28rpx;
+  margin: 12rpx 0 8rpx;
+  color: #333;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.goods-card .price {
+  color: #ff6600;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 16rpx;
+}
+
+.goods-card button {
+  margin-top: 8rpx;
+  background-color: #ff6600;
+  color: #fff;
+  font-size: 24rpx;
+  width: 100%;
+  border-radius: 40rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border: none;
+}
+
+.goods-card button::after {
+  border: none;
+}
+
+.promote-banner {
+  background: linear-gradient(135deg, #ffcc88, #ff9944);
+  padding: 20rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  margin: 20rpx 0;
+  color: #fff;
+  font-weight: bold;
+}
+
+.sku-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: #fff;
+  width: 100%;
+  border-radius: 40rpx 40rpx 0 0;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.popup-header {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+
+.popup-goods-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+  margin-right: 20rpx;
+}
+
+.popup-goods-info {
+  flex: 1;
+}
+
+.popup-price {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #ff6600;
+  display: block;
+}
+
+.stock {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin: 10rpx 0;
+}
+
+.selected-sku {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.close-icon {
+  font-size: 48rpx;
+  color: #999;
+  padding: 0 10rpx;
+}
+
+.sku-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.sku-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 30rpx;
+}
+
+.sku-item {
+  width: 200rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  text-align: center;
+  border: 2rpx solid #eee;
+  border-radius: 16rpx;
+  padding: 16rpx 0;
+}
+
+.sku-item.active {
+  border-color: #ff6600;
+  background: #fff9f0;
+}
+
+.sku-item image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  margin-bottom: 10rpx;
+}
+
+.sku-item text {
+  display: block;
+  font-size: 26rpx;
+  color: #333;
+}
+
+.sku-price {
+  color: #ff6600;
+  font-weight: bold;
+  margin-top: 6rpx;
+}
+
+.popup-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quantity-stepper {
+  display: flex;
+  align-items: center;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  overflow: hidden;
+  margin-left: 20rpx;
+}
+
+.stepper-btn {
+  width: 52rpx;
+  height: 52rpx;
+  line-height: 52rpx;
+  text-align: center;
+  background: #fafafa;
+  font-size: 30rpx;
+}
+
+.stepper-num {
+  min-width: 64rpx;
+  text-align: center;
+  font-size: 26rpx;
+}
+
+.confirm-btn {
+  background: #ff6600;
+  color: #fff;
+  border-radius: 40rpx;
+  padding: 0 60rpx;
+  font-size: 30rpx;
+  line-height: 72rpx;
+  height: 72rpx;
+  border: none;
+}

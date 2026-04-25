@@ -1,0 +1,44 @@
+<view class="coupon-page">
+  <!-- 优惠券分类标签 -->
+  <view class="coupon-tabs">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-tab="0">
+      商品满减券
+    </view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-tab="1">
+      文旅体验券
+    </view>
+  </view>
+
+  <!-- 优惠券列表 -->
+  <view class="coupon-list">
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{currentList.length === 0}}">
+      <text class="empty-icon">🎫</text>
+      <text class="empty-text">暂无体验券，快去下单吧~</text>
+    </view>
+
+    <!-- 优惠券卡片 -->
+    <view class="coupon-card {{item.status === '已使用' ? 'used' : ''}}" wx:for="{{currentList}}" wx:key="id">
+      <view class="coupon-left">
+        <view class="coupon-price">
+          <text wx:if="{{item.type === 'goods'}}">¥{{item.reduce}}</text>
+          <text wx:if="{{item.type === 'travel'}}">专享</text>
+        </view>
+        <view class="coupon-condition" wx:if="{{item.type === 'goods'}}">
+          满{{item.full}}可用
+        </view>
+      </view>
+      <view class="coupon-right">
+        <view class="coupon-title">{{item.title}}</view>
+        <view class="coupon-desc">
+          <text wx:if="{{item.type === 'goods'}}">商城实物商品通用</text>
+          <text wx:if="{{item.type === 'travel'}}">研学课程/采摘体验通用</text>
+        </view>
+        <view class="coupon-time">有效期至：{{item.expireTime}}</view>
+      </view>
+      <view class="coupon-status" wx:if="{{item.status === '已使用'}}">
+        已使用
+      </view>
+    </view>
+  </view>
+</view>

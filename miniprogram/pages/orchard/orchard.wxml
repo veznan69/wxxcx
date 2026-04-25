@@ -1,0 +1,114 @@
+<view class="orchard-page">
+  <!-- 价格卡片（内含横幅图） -->
+  <view class="price-card">
+    <!-- 顶部横幅图移入卡片内 -->
+    <swiper 
+  class="orchard-swiper" 
+  indicator-dots 
+  circular 
+  autoplay 
+  interval="3000"
+>
+  <swiper-item wx:for="{{orchardSwiperList}}" wx:key="index">
+    <image 
+      class="swiper-img" 
+      src="{{item}}" 
+      mode="aspectFill"
+      bindtap="previewImg"
+      data-index="{{index}}"
+    ></image>
+  </swiper-item>
+</swiper>
+    
+    <view class="title">赣南脐橙认养服务</view>
+    <view class="subtitle">见证橙熟 守护健康</view>
+    <view class="price-row">
+      <text class="price">¥998</text>
+      <text class="cycle">/ 年</text>
+    </view>
+    <view class="total-value">总价值约 ¥2600</view>
+  </view>
+
+  <!-- 认养权益卡片 -->
+  <view class="benefits-card">
+    <view class="card-title">认养权益</view>
+    
+    <!-- 基础权益（必享） -->
+    <view class="benefit-item">
+      <view class="benefit-icon">🍊</view>
+      <view class="benefit-content">
+        <text class="benefit-title">脐橙树认养权（1年）</text>
+        <text class="benefit-desc">带箱保底70斤，多挂多得，整树下一季节全部收获</text>
+      </view>
+    </view>
+
+    <!-- 二选一权益（突出显示+可选择） -->
+    <view class="choice-card">
+      <view class="choice-title">以下权益二选一（必选）</view>
+      
+      <view class="choice-option {{selectedChoice === 1 ? 'selected' : ''}}" 
+            bindtap="selectChoice" data-choice="1">
+        <view class="option-header">
+          <text class="option-tag">选项一</text>
+          <text class="option-name">景区住宿套餐</text>
+        </view>
+        <view class="option-desc">
+          <text>• AAAAA景区大余丫山高端酒店2天1晚（含双早）</text>
+          <text>• 景区门票2张</text>
+          <text>• 景区酒店午晚餐7.5折优惠</text>
+        </view>
+      </view>
+
+      <view class="choice-option {{selectedChoice === 2 ? 'selected' : ''}}" 
+            bindtap="selectChoice" data-choice="2">
+        <view class="option-header">
+          <text class="option-tag">选项二</text>
+          <text class="option-name">农产品套餐</text>
+        </view>
+        <view class="option-desc">
+          <text>• 5只山野土鸡</text>
+          <text>• 30枚土鸡蛋</text>
+          <text>• 全部包邮到家</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 其他必享权益 -->
+    <view class="benefit-item">
+      <view class="benefit-icon">🐔</view>
+      <view class="benefit-content">
+        <text class="benefit-title">农产品礼包</text>
+        <text class="benefit-desc">山野土鸡1只 + 30枚土鸡蛋，包邮到家</text>
+      </view>
+    </view>
+
+    <view class="benefit-item">
+      <view class="benefit-icon">🏷️</view>
+      <view class="benefit-content">
+        <text class="benefit-title">个性化果树挂牌</text>
+        <text class="benefit-desc">专属果树编号，农场主尊享身份</text>
+      </view>
+    </view>
+
+    <view class="benefit-item">
+      <view class="benefit-icon">📹</view>
+      <view class="benefit-content">
+        <text class="benefit-title">远程实时监控</text>
+        <text class="benefit-desc">全程见证果树生长、施肥、开花结果</text>
+      </view>
+    </view>
+
+    <view class="benefit-item">
+      <view class="benefit-icon">🎉</view>
+      <view class="benefit-content">
+        <text class="benefit-title">线下活动参与权</text>
+        <text class="benefit-desc">每年年猪宴、采摘研学、亲子活动免费参加</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部固定认养按钮 -->
+  <view class="bottom-bar">
+    <button class="adopt-btn" bindtap="adopt">立即认养</button>
+  </view>
+</view>

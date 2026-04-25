@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="title">商家认证申请</view>
+  
+  <view class="form-item">
+    <text class="label">店铺名称</text>
+    <input placeholder="请输入店铺名称" value="{{form.shopName}}" bindinput="onShopNameInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">联系人</text>
+    <input placeholder="姓名" value="{{form.contactName}}" bindinput="onContactNameInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">联系电话</text>
+    <input placeholder="手机号" type="number" value="{{form.contactPhone}}" bindinput="onContactPhoneInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">店铺地址</text>
+    <input placeholder="详细地址" value="{{form.shopAddress}}" bindinput="onShopAddressInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">营业执照</text>
+    <button class="upload-btn" bindtap="uploadLicense">📷 上传营业执照（最多3张）</button>
+    
+    <!-- 图片预览列表 -->
+    <view class="image-list" wx:if="{{form.licenseImages.length > 0}}">
+      <view class="image-item" wx:for="{{form.licenseImages}}" wx:key="index">
+        <image class="image" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+        <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">✕</view>
+      </view>
+    </view>
+  </view>
+  <view class="form-item">
+    <text class="label">备注</text>
+    <textarea placeholder="选填" value="{{form.remark}}" bindinput="onRemarkInput" />
+  </view>
+
+  <!-- 修改提交申请按钮 -->
+  <button class="submit-btn" bindtap="submitApply">提交申请</button>
+
+  <!-- 修改查看申请状态按钮，并增加上边距 -->
+  <button class="status-btn" bindtap="checkStatus" style="margin-top: 30rpx;">查看申请状态</button>
+</view>

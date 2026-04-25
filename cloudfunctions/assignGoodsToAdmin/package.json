@@ -1,0 +1,9 @@
+{
+  "name": "assignGoodsToAdmin",
+  "version": "1.0.0",
+  "description": "将现有商品绑定到 admin 用户",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

@@ -1,0 +1,11 @@
+<view class="science">
+  <image src="/images/science_banner.png" mode="widthFix"></image>
+  <view class="content">
+    <view class="title">什么是富硒土壤？</view>
+    <text>赣南地区拥有天然富硒土壤，这种土壤富含微量元素“硒”。在富硒土壤中种植的农作物，能够通过根系吸收土壤中的硒元素，使得果实品质更优。</text>
+    <view class="title">富硒土壤的优势</view>
+    <text>硒是人体必需的抗氧化元素，有助于增强免疫力、延缓衰老。富硒土壤种植的脐橙，吸收了土壤中的天然养分，品质更佳。</text>
+    <view class="title">我们的种植环境</view>
+    <text>我们的果园位于赣南核心富硒区，土壤经权威机构检测，硒含量丰富。坚持绿色种植，不施化学催熟剂，自然成熟。</text>
+  </view>
+</view>

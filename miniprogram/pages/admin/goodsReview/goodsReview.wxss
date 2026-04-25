@@ -1,0 +1,71 @@
+.page {
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding: 20rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.name {
+  flex: 1;
+  font-size: 30rpx;
+  color: #222;
+  font-weight: 600;
+  margin-right: 12rpx;
+}
+
+.price {
+  font-size: 30rpx;
+  color: #ff6600;
+  font-weight: 600;
+}
+
+.meta {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.actions {
+  margin-top: 16rpx;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12rpx;
+}
+
+.btn {
+  margin: 0;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  padding: 0 22rpx;
+}
+
+.btn-reject {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.btn-approve {
+  background: #ff6600;
+  color: #fff;
+}
+
+.empty {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  padding: 160rpx 0;
+}

@@ -1,0 +1,67 @@
+<view class="orders-page">
+  <view class="search-box">
+    <icon type="search" size="16" color="#999"></icon>
+    <input
+      type="text"
+      placeholder="搜索商品或订单号"
+      bindinput="onSearchInput"
+      value="{{searchKeyword}}"
+      confirm-type="search"
+    />
+    <text wx:if="{{searchKeyword}}" class="clear-btn" bindtap="clearSearch">✕</text>
+  </view>
+
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 0 ? 'active' : ''}}" bindtap="onTabChange" data-index="0">全部</view>
+    <view class="tab-item {{activeTab === 1 ? 'active' : ''}}" bindtap="onTabChange" data-index="1">待发货</view>
+    <view class="tab-item {{activeTab === 2 ? 'active' : ''}}" bindtap="onTabChange" data-index="2">已发货</view>
+    <view class="tab-item {{activeTab === 3 ? 'active' : ''}}" bindtap="onTabChange" data-index="3">已完成</view>
+  </view>
+
+  <view class="order-list">
+    <block wx:for="{{orders}}" wx:key="_id">
+      <view class="order-card" bindtap="viewDetail" data-order="{{item}}">
+        <view class="order-header">
+          <text class="order-status">{{item.status}}</text>
+          <text class="order-time">{{item.createTimeStr}}</text>
+        </view>
+
+        <view class="order-goods">
+          <block wx:for="{{item.items}}" wx:key="goodsId">
+            <view class="goods-item">
+              <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+              <view class="goods-info">
+                <text class="goods-name">{{item.name}}</text>
+                <text class="goods-price">¥{{item.price}} × {{item.num}}</text>
+              </view>
+            </view>
+          </block>
+        </view>
+
+        <view class="order-footer">
+          <text class="total">共{{item.items.length}}件，合计：¥{{item.totalPriceFixed}}</text>
+          <view class="actions">
+            <button
+              wx:if="{{item.status === '已发货'}}"
+              class="received-btn"
+              size="mini"
+              catchtap="confirmReceived"
+              data-id="{{item._id}}"
+            >
+              已收货
+            </button>
+            <button
+              class="logistics-btn"
+              size="mini"
+              catchtap="gotoLogistics"
+              data-id="{{item._id}}"
+            >
+              物流查询
+            </button>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{orders.length === 0}}" class="empty">暂无订单</view>
+  </view>
+</view>

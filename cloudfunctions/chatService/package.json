@@ -1,0 +1,9 @@
+{
+  "name": "chatService",
+  "version": "1.0.0",
+  "description": "客服聊天云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

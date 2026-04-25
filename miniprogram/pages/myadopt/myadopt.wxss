@@ -1,0 +1,144 @@
+/* pages/myadopt/myadopt.wxss */
+.myadopt-page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding-top: 200rpx;
+}
+.empty-icon {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+}
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 40rpx;
+}
+.go-adopt-btn {
+  background: #ff6600;
+  color: #fff;
+  border-radius: 50rpx;
+  width: 200rpx;
+  height: 70rpx;
+  font-size: 28rpx;
+  /* 使用 flex 实现完美居中，并重置默认边距 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  line-height: 1;  /* 避免行高影响垂直居中 */
+  box-sizing: border-box;
+}
+.go-adopt-btn::after {
+  border: none;  /* 去除微信小程序按钮默认边框 */
+}
+
+/* 认养列表 */
+.adopt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+.adopt-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  position: relative;
+}
+.status-tag {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+}
+.status-tag.active {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+.status-tag.expired {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+.status-tag.pending {
+  background: #fff7e6;
+  color: #faad14;
+}
+
+.tree-info {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+.tree-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+}
+.tree-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.tree-no {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+.adopt-time, .expire-time {
+  font-size: 24rpx;
+  color: #666;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+.action-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 25rpx;
+  font-weight: 500;
+  padding: 0; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+.monitor-btn {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+.benefit-btn {
+  background: #fff7e6;
+  color: #faad14;
+}
+
+.status-tag.paid {
+  background-color: #07c160;
+  color: #fff;
+}
+.status-tag.verified {
+  background-color: #1989fa;
+  color: #fff;
+}
+.status-tag.pending {
+  background-color: #ff976a;
+  color: #fff;
+}

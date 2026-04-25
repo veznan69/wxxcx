@@ -1,0 +1,41 @@
+<view class="page">
+  <view class="card" wx:if="{{order}}">
+    <view class="row">
+      <text class="label">订单状态</text>
+      <text class="value status">{{order.status}}</text>
+    </view>
+    <view class="row" wx:if="{{hasLogistics}}">
+      <text class="label">物流公司</text>
+      <text class="value">{{company}}</text>
+    </view>
+    <view class="row" wx:if="{{hasLogistics}}">
+      <text class="label">运单号</text>
+      <text class="value">{{trackingNo}}</text>
+    </view>
+    <view class="row" wx:else>
+      <text class="label">物流信息</text>
+      <text class="value">待发货，暂无物流信息</text>
+    </view>
+    <view class="row">
+      <text class="label">订单号</text>
+      <text class="value">{{order._id}}</text>
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{traces.length}}">
+    <view class="title">物流轨迹（模拟）</view>
+    <view class="trace-list">
+      <view class="trace-item {{index === 0 ? 'latest' : ''}}" wx:for="{{traces}}" wx:key="index">
+        <view class="dot"></view>
+        <view class="content">
+          <text class="time">{{item.time}}</text>
+          <text class="text">{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!loading && !order}}">
+    暂无物流信息
+  </view>
+</view>

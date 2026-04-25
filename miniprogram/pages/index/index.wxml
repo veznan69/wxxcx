@@ -1,0 +1,76 @@
+<view class="container">
+  <swiper indicator-dots autoplay circular class="swiper">
+    <swiper-item wx:for="{{banners}}" wx:key="index">
+      <image src="{{item}}" mode="widthFix" class="banner-img"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- <view class="science-entry" bindtap="gotoScience">
+    <view class="science-content">
+      <text class="title">富硒科普专区</text>
+      <text class="sub">了解硒元素的神奇之处</text>
+    </view>
+  </view> -->
+
+  <view class="experience-grid">
+    <view class="grid-item" wx:for="{{expItems}}" wx:key="index" bindtap="{{item.tap}}">
+      <image src="{{item.icon}}"></image>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+
+  <view class="hot-title">热销推荐</view>
+  <view class="goods-list">
+    <view class="goods-card" wx:for="{{hotGoods}}" wx:key="_id" bindtap="gotoDetail" data-id="{{item._id}}">
+      <image src="{{item.image}}" mode="aspectFill"></image>
+      <text class="name">{{item.name}}</text>
+      <text class="price">¥{{item.price}}</text>
+      <button size="mini" catchtap="addToCart" data-id="{{item._id}}">加入购物车</button>
+    </view>
+  </view>
+
+  <view class="promote-banner" bindtap="gotoCouponRule">
+    <text>下单即送体验券 >></text>
+  </view>
+
+  <view class="sku-popup" wx:if="{{showSkuPopup}}" catchtap="closeSkuPopup">
+    <view class="popup-content" catchtap="stopPropagation">
+      <view class="popup-header">
+        <image class="popup-goods-img" src="{{selectedSku.image}}" mode="aspectFill"></image>
+        <view class="popup-goods-info">
+          <text class="popup-price">¥{{selectedSku.price}}</text>
+          <text class="stock">库存充足</text>
+          <text class="selected-sku">已选：{{selectedSku.name}}</text>
+        </view>
+        <view class="close-icon" catchtap="closeSkuPopup">×</view>
+      </view>
+
+      <view class="sku-title">选择款式</view>
+      <view class="sku-list">
+        <view
+          wx:for="{{currentGoods.variants}}"
+          wx:key="id"
+          class="sku-item {{selectedSku.id === item.id ? 'active' : ''}}"
+          catchtap="selectGoodsSku"
+          data-sku="{{item}}"
+        >
+          <image src="{{item.image}}" mode="aspectFill"></image>
+          <text>{{item.name}}</text>
+          <text class="sku-price">¥{{item.price}}</text>
+        </view>
+      </view>
+
+      <view class="popup-footer">
+        <view class="quantity-stepper">
+          <text>数量</text>
+          <view class="stepper">
+            <view class="stepper-btn" catchtap="decreaseSkuQuantity">-</view>
+            <text class="stepper-num">{{skuQuantity}}</text>
+            <view class="stepper-btn" catchtap="increaseSkuQuantity">+</view>
+          </view>
+        </view>
+        <button class="confirm-btn" catchtap="confirmSkuAdd">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

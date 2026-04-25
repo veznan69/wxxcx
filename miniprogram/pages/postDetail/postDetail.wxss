@@ -1,0 +1,269 @@
+.post-detail-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 120rpx;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #999;
+}
+
+.post-content {
+  background-color: #fff;
+  padding: 30rpx;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background-color: #f0f0f0;
+}
+
+.user-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.post-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.post-title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  line-height: 1.4;
+}
+
+.post-text {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+  word-wrap: break-word;
+}
+
+.post-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10rpx;
+  margin-bottom: 20rpx;
+}
+
+.post-image {
+  width: 100%;
+  height: 220rpx;
+  border-radius: 12rpx;
+  background-color: #f0f0f0;
+}
+
+.post-stats {
+  display: flex;
+  gap: 40rpx;
+  padding: 20rpx 0;
+  border-top: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+}
+
+.like-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.like-icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+  transition: transform 0.3s ease;
+}
+
+.like-icon.liked {
+  animation: likeAnimation 0.3s ease;
+}
+
+@keyframes likeAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.stat-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.divider {
+  height: 20rpx;
+  background-color: #f5f5f5;
+}
+
+.comments-header {
+  padding: 30rpx 0 20rpx;
+}
+
+.comments-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.comments-list {
+  padding: 20rpx 0;
+}
+
+.comment-item {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+
+.comment-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+  background-color: #f0f0f0;
+}
+
+.comment-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.comment-user {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #666;
+}
+
+.comment-like-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.comment-like-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-like-icon {
+  font-size: 28rpx;
+  margin-right: 6rpx;
+}
+
+.comment-like-icon.liked {
+  animation: likeAnimation 0.3s ease;
+}
+
+.comment-like-count {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.comment-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+  word-wrap: break-word;
+}
+
+.comment-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.empty-comments {
+  padding: 60rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.comment-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx 30rpx;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+
+.comment-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.comment-input {
+  flex: 1;
+  height: 72rpx;
+  padding: 0 24rpx;
+  border-radius: 36rpx;
+  background-color: #f5f5f5;
+  font-size: 28rpx;
+}
+
+.send-button {
+  width: 120rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  padding: 0;
+  border-radius: 36rpx;
+  background: linear-gradient(135deg, #FF6600 0%, #FF8533 100%);
+  color: #fff;
+  font-size: 28rpx;
+  border: none;
+}
+
+.send-button[disabled] {
+  background: #ccc;
+}

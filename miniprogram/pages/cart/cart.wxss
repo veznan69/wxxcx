@@ -1,0 +1,228 @@
+/* pages/cart/cart.wxss */
+.cart-page {
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  padding-bottom: 180rpx !important; /* 修复遮挡 */
+}
+
+.cart-list {
+  padding: 20rpx;
+}
+
+/* 购物车商品卡片 */
+.cart-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.item-checkbox {
+  margin-right: 20rpx;
+  transform: scale(1.1);
+  position: relative;
+  z-index: 10;
+}
+
+.item-image {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+  margin-right: 24rpx;
+  background-color: #f0f0f0;
+  object-fit: cover;
+}
+
+.item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.item-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-price {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ff6600;
+  margin-bottom: 16rpx;
+}
+
+/* 数量加减器 */
+.item-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.stepper-btn {
+  width: 56rpx;
+  height: 56rpx;
+  background: #f5f5f5;
+  border-radius: 28rpx;
+  text-align: center;
+  line-height: 56rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.stepper-btn:active {
+  background: #e0e0e0;
+  transform: scale(0.95);
+}
+
+.stepper-num {
+  width: 80rpx;
+  text-align: center;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 空购物车样式 */
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 50rpx;
+}
+
+.go-shop-btn {
+  background: linear-gradient(135deg, #ffaa44, #ff6600);
+  color: #fff;
+  width: 260rpx;
+  border-radius: 60rpx;
+  font-size: 28rpx;
+  margin: 0 auto;
+  box-shadow: 0 4rpx 12rpx rgba(255, 102, 0, 0.3);
+}
+
+.go-shop-btn:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+/* ========== 底部结算栏（美化版） ========== */
+.settlement-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20rpx);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  padding-bottom: calc(20rpx + constant(safe-area-inset-bottom));
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 24rpx rgba(0, 0, 0, 0.08);
+  border-top: 1rpx solid rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+/* 合计区域 */
+.total-area {
+  flex: 1;
+}
+
+.total-label {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+.total-price-wrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.total-symbol {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #ff6600;
+  margin-right: 2rpx;
+}
+
+.total-price {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #ff6600;
+  letter-spacing: -1rpx;
+}
+
+/* 结算按钮（大圆角渐变） */
+.checkout-btn {
+  background: linear-gradient(135deg, #ff8c42, #ff6600);
+  border: none;
+  border-radius: 56rpx;
+  width: 240rpx;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  box-shadow: 0 8rpx 20rpx rgba(255, 102, 0, 0.35);
+  transition: all 0.2s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.checkout-btn::after {
+  border: none;
+}
+
+.checkout-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 4rpx 12rpx rgba(255, 102, 0, 0.4);
+  opacity: 0.92;
+}
+
+.checkout-icon {
+  font-size: 36rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+.checkout-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 2rpx;
+}
+
+.checkout-count {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 4rpx;
+}

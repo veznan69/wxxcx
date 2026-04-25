@@ -1,0 +1,51 @@
+<view class="container">
+  <!-- 上传图片 -->
+  <view class="form-section">
+    <text class="section-title">图片（选填）</text>
+    <view class="image-list">
+      <view wx:if="{{images.length > 0}}" class="image-item" wx:for="{{images}}" wx:key="*this">
+        <image class="image-preview" src="{{item}}" mode="aspectFill"></image>
+        <view class="image-delete" bindtap="onDeleteImage" data-index="{{index}}">
+          <text class="delete-icon">×</text>
+        </view>
+      </view>
+      <view wx:if="{{images.length < 9}}" class="image-add" bindtap="onChooseImage">
+        <text class="add-icon">+</text>
+        <text class="add-text">添加图片</text>
+      </view>
+    </view>
+    <text class="section-hint">最多可上传9张图片</text>
+  </view>
+
+  <!-- 标题 -->
+  <view class="form-section">
+    <text class="section-title">标题（选填）</text>
+    <input
+      class="input-field"
+      placeholder="请输入标题"
+      value="{{title}}"
+      bindinput="onTitleInput"
+      maxlength="50"
+    />
+    <text class="char-count">{{title.length}}/50</text>
+  </view>
+
+  <!-- 内容 -->
+  <view class="form-section">
+    <text class="section-title required">内容（必填）</text>
+    <textarea
+      class="textarea-field"
+      placeholder="分享你的故事、心得或见闻..."
+      value="{{content}}"
+      bindinput="onContentInput"
+      maxlength="1000"
+      show-confirm-bar="{{false}}"
+    />
+    <text class="char-count">{{content.length}}/1000</text>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-btn" bindtap="onSubmit">
+    <text>{{submitting ? '发布中...' : '发布'}}</text>
+  </view>
+</view>

@@ -1,0 +1,36 @@
+<view class="order-page">
+
+<!-- 收货地址卡片 -->
+<view class="address-card" bindtap="chooseAddress">
+  <view class="address-left">
+    <text class="name">收货人：{{address.name}}</text>
+    <text class="phone">{{address.phone}}</text>
+    <text class="detail">收货地址：{{address.detail}}</text>
+  </view>
+  <view class="arrow">></view>
+</view>
+
+<!-- 商品列表卡片 -->
+<view class="goods-card">
+  <view class="goods-item" wx:for="{{orderItems}}" wx:key="goodsId">
+    <image src="{{item.image}}" mode="aspectFill"></image>
+    <view class="info">
+      <text class="name">{{item.name}}</text>
+      <text class="num">x{{item.num}}</text>
+      <text class="price">¥{{item.price}}</text>
+    </view>
+  </view>
+</view>
+
+<!-- 实付金额卡片 -->
+<view class="total-card">
+  <text>实付金额</text>
+  <text class="price">¥{{totalPrice}}</text>
+</view>
+
+<!-- 底部按钮区域 -->
+<view class="order-footer">
+  <button class="submit-btn" bindtap="submitOrder">提交订单并支付</button>
+</view>
+
+</view>

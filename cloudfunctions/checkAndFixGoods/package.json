@@ -1,0 +1,9 @@
+{
+  "name": "checkAndFixGoods",
+  "version": "1.0.0",
+  "description": "检查和修复商品数据",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

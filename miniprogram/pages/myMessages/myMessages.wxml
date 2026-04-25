@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="toolbar">
+    <button class="read-all" size="mini" bindtap="markAllRead">全部已读</button>
+  </view>
+
+  <view class="list" wx:if="{{list.length}}">
+    <view
+      class="item {{item.read ? 'read' : 'unread'}}"
+      wx:for="{{list}}"
+      wx:key="_id"
+      data-id="{{item._id}}"
+      bindtap="onTapMessage"
+    >
+      <view class="row">
+        <text class="title">{{item.title}}</text>
+        <text class="time">{{item.createTimeStr}}</text>
+      </view>
+      <text class="content">{{item.content}}</text>
+      <text class="status" wx:if="{{!item.read}}">未读</text>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <text>{{loading ? '加载中...' : '暂无消息'}}</text>
+  </view>
+</view>

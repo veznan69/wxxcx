@@ -1,0 +1,34 @@
+<view class="myadopt-page">
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{adoptList.length === 0}}">
+    <image class="empty-icon" src="/images/empty_orchard.png"></image>
+    <text class="empty-text">您还没有认养任何果树</text>
+    <button class="go-adopt-btn" bindtap="goToOrchard">去认养</button>
+  </view>
+
+  <!-- 认养列表 -->
+  <view class="adopt-list" wx:else>
+    <view class="adopt-card" wx:for="{{adoptList}}" wx:key="id">
+      <!-- 状态标签：使用 statusText 显示中文，rawStatus 作为样式类名 -->
+      <view class="status-tag {{item.rawStatus}}">
+        {{item.statusText}}
+      </view>
+
+      <!-- 果树信息 -->
+      <view class="tree-info">
+        <image class="tree-img" src="{{item.image}}"></image>
+        <view class="tree-detail">
+          <text class="tree-no">果树编号：{{item.treeNo}}</text>
+          <text class="adopt-time">认养时间：{{item.createTime}}</text>
+          <text class="expire-time">到期时间：{{item.expireTime}}</text>
+        </view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="action-buttons">
+        <button class="action-btn monitor-btn" bindtap="goToMonitor" data-id="{{item.id}}">远程监控</button>
+        <button class="action-btn benefit-btn" bindtap="goToBenefits" data-id="{{item.id}}">查看权益</button>
+      </view>
+    </view>
+  </view>
+</view>

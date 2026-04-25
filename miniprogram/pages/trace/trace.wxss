@@ -1,0 +1,183 @@
+/* pages/trace/trace.wxss */
+.trace-page {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  position: relative;
+}
+
+.orchard-img {
+  width: 100%;
+  height: 400rpx;
+  pointer-events: none;  /* 让点击穿透到返回按钮 */
+}
+
+.back-btn {
+  position: absolute;
+  top: 30rpx;
+  left: 30rpx;
+  width: 64rpx;
+  height: 64rpx;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  pointer-events: auto;
+}
+
+.back-icon {
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.title {
+  position: absolute;
+  bottom: 30rpx;
+  left: 30rpx;
+  color: #fff;
+  font-size: 40rpx;
+  font-weight: bold;
+  text-shadow: 0 2rpx 10rpx rgba(0,0,0,0.3);
+}
+
+.info-card {
+  background: #fff;
+  margin: 30rpx;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: #666;
+  font-size: 28rpx;
+}
+.value {
+  color: #333;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.desc-card {
+  background: #fff;
+  margin: 0 30rpx 30rpx;
+  border-radius: 24rpx;
+  padding: 30rpx;
+}
+.desc-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+.desc-content {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* ========== 新增样式：区块链存证卡片 ========== */
+.blockchain-card {
+  background: #fff;
+  margin: 0 30rpx 30rpx;
+  border-radius: 24rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.card-icon {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.tag-onshore {
+  background: #52c41a;
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.info-list .info-item {
+  padding: 16rpx 0;
+}
+
+.hash {
+  font-family: monospace;
+  font-size: 24rpx;
+  color: #1890ff;
+  max-width: 400rpx;
+  word-break: break-all;
+  text-align: right;
+}
+
+/* ========== 新增样式：政府对接卡片 ========== */
+.gov-card {
+  background: #fff;
+  margin: 0 30rpx 30rpx;
+  border-radius: 24rpx;
+  padding: 24rpx 30rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.cert-thumb {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  margin-right: 24rpx;
+  background: #f0f2f5;
+}
+
+.cert-text {
+  flex: 1;
+}
+
+.cert-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.cert-desc {
+  font-size: 24rpx;
+  color: #888;
+}
+
+.arrow {
+  font-size: 48rpx;
+  color: #ccc;
+}

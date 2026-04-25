@@ -1,0 +1,10 @@
+{
+  "name": "orderManageCenter",
+  "version": "1.0.0",
+  "description": "order manage list/detail for merchant and admin",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}
+

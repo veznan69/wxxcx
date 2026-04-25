@@ -1,0 +1,241 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:else>
+    <view class="type-banner">
+      <text>当前编辑：</text>
+      <text class="type-text">{{activeTab === 'multi' ? '多规格商品' : '单规格商品'}}</text>
+    </view>
+
+    <view wx:if="{{activeTab === 'single'}}" class="form">
+      <view class="form-item">
+        <view class="label">商品名称</view>
+        <input
+          class="input"
+          value="{{singleGoods.name}}"
+          placeholder="请输入商品名称"
+          bindinput="onSingleNameInput"
+        />
+      </view>
+
+      <view class="form-item">
+        <view class="label">商品价格（元）</view>
+        <input
+          class="input"
+          type="digit"
+          value="{{singleGoods.price}}"
+          placeholder="请输入商品价格"
+          bindinput="onSinglePriceInput"
+        />
+      </view>
+
+      <view class="form-item">
+        <view class="label">商品图片（最多9张）</view>
+        <view class="image-list">
+          <view
+            wx:for="{{singleGoods.images}}"
+            wx:key="index"
+            class="image-item"
+            data-index="{{index}}"
+            bindtap="onSinglePreviewImage"
+          >
+            <image src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" data-index="{{index}}" catchtap="onSingleDeleteImage">
+              <text>删除</text>
+            </view>
+          </view>
+          <view wx:if="{{singleGoods.images.length < 9}}" class="image-add" bindtap="onSingleChooseImage">
+            <text>+</text>
+          </view>
+        </view>
+        <view wx:if="{{!isAdmin}}" class="tips">
+          <text>商家修改图片后需要重新审核</text>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="label">商品描述</view>
+        <textarea
+          class="textarea"
+          value="{{singleGoods.desc}}"
+          placeholder="请输入商品描述"
+          maxlength="500"
+          bindinput="onSingleDescInput"
+        ></textarea>
+      </view>
+
+      <view class="form-item">
+        <view class="label">溯源码</view>
+        <view class="switch-wrapper">
+          <text>生成商品溯源码</text>
+          <switch checked="{{singleGoods.generateTraceCode}}" bindchange="onSingleToggleTraceCode" />
+        </view>
+      </view>
+
+      <view class="btn-wrapper">
+        <button
+          class="submit-btn {{submitting ? 'disabled' : ''}}"
+          bindtap="onSubmit"
+          disabled="{{submitting}}"
+        >
+          {{submitting ? '提交中...' : '保存修改'}}
+        </button>
+      </view>
+    </view>
+
+    <view wx:if="{{activeTab === 'multi'}}" class="form">
+      <view class="form-item">
+        <view class="label">商品名称</view>
+        <input
+          class="input"
+          value="{{multiGoods.name}}"
+          placeholder="请输入商品名称"
+          bindinput="onMultiNameInput"
+        />
+      </view>
+
+      <view class="specs-section">
+        <view class="section-title">商品规格</view>
+
+        <view
+          wx:for="{{multiGoods.specs}}"
+          wx:key="index"
+          class="spec-item"
+        >
+          <view class="spec-header">
+            <text class="spec-index">规格 {{index + 1}}</text>
+            <text
+              wx:if="{{multiGoods.specs.length > 1}}"
+              class="spec-delete"
+              data-index="{{index}}"
+              bindtap="onDeleteSpec"
+            >
+              删除
+            </text>
+          </view>
+
+          <view class="spec-field">
+            <view class="field-label">
+              <text>规格名称</text>
+            </view>
+            <view class="field-input-wrapper">
+              <input
+                class="field-input"
+                value="{{item.name}}"
+                placeholder="例如：500g装"
+                data-index="{{index}}"
+                bindinput="onSpecNameInput"
+              />
+            </view>
+          </view>
+
+          <view class="spec-field">
+            <view class="field-label">
+              <text>规格价格（元）</text>
+            </view>
+            <view class="field-input-wrapper">
+              <input
+                class="field-input"
+                type="digit"
+                value="{{item.price}}"
+                placeholder="请输入价格"
+                data-index="{{index}}"
+                bindinput="onSpecPriceInput"
+              />
+            </view>
+          </view>
+
+          <view class="spec-field">
+            <view class="field-label">
+              <text>规格款式</text>
+            </view>
+            <view class="field-input-wrapper">
+              <input
+                class="field-input"
+                value="{{item.style}}"
+                placeholder="例如：礼盒装"
+                data-index="{{index}}"
+                bindinput="onSpecStyleInput"
+              />
+            </view>
+          </view>
+
+          <view class="spec-field">
+            <view class="field-label">
+              <text>规格图片（最多5张）</text>
+            </view>
+            <view class="spec-image-list">
+              <view
+                wx:for="{{item.images}}"
+                wx:for-item="img"
+                wx:for-index="imgIndex"
+                wx:key="imgIndex"
+                class="spec-image-item"
+                data-spec-index="{{index}}"
+                data-image-index="{{imgIndex}}"
+                bindtap="onSpecPreviewImage"
+              >
+                <image src="{{img}}" mode="aspectFill"></image>
+                <view
+                  class="delete-btn"
+                  data-spec-index="{{index}}"
+                  data-image-index="{{imgIndex}}"
+                  catchtap="onSpecDeleteImage"
+                >
+                  <text>删除</text>
+                </view>
+              </view>
+              <view
+                wx:if="{{item.images.length < 5}}"
+                class="spec-image-add"
+                data-index="{{index}}"
+                bindtap="onSpecChooseImage"
+              >
+                <text>+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view wx:if="{{multiGoods.specs.length < 10}}" class="add-spec-btn" bindtap="onAddSpec">
+          <text>+ 添加规格</text>
+        </view>
+
+        <view wx:if="{{!isAdmin}}" class="tips spec-tips">
+          <text>商家修改规格图片后需要重新审核</text>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <view class="label">商品描述</view>
+        <textarea
+          class="textarea"
+          value="{{multiGoods.desc}}"
+          placeholder="请输入商品描述"
+          maxlength="500"
+          bindinput="onMultiDescInput"
+        ></textarea>
+      </view>
+
+      <view class="form-item">
+        <view class="label">溯源码</view>
+        <view class="switch-wrapper">
+          <text>生成商品溯源码</text>
+          <switch checked="{{multiGoods.generateTraceCode}}" bindchange="onMultiToggleTraceCode" />
+        </view>
+      </view>
+
+      <view class="btn-wrapper">
+        <button
+          class="submit-btn {{submitting ? 'disabled' : ''}}"
+          bindtap="onSubmit"
+          disabled="{{submitting}}"
+        >
+          {{submitting ? '提交中...' : '保存修改'}}
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

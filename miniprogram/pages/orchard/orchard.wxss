@@ -1,0 +1,209 @@
+/* pages/orchard/orchard.wxss */
+/* 页面整体 */
+.orchard-page {
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 120rpx;
+}
+
+/* 价格卡片（包含顶部横幅） */
+.price-card {
+  background: #fff;
+  margin: 20rpx 20rpx 20rpx 20rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  overflow: hidden;  /* 确保图片圆角生效 */
+}
+
+/* 顶部横幅图（现在在卡片内部） */
+.banner {
+  width: 100%;
+  display: block;
+}
+
+/* 卡片内文字内容（原价格卡片内容） */
+.price-card .title,
+.price-card .subtitle,
+.price-card .price-row,
+.price-card .total-value {
+  padding: 0 30rpx;
+}
+
+.price-card .title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+  text-align: center;
+}
+.price-card .subtitle {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+.price-card .price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+.price-card .price {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #ff6600;
+}
+.price-card .cycle {
+  font-size: 28rpx;
+  color: #666;
+  margin-left: 10rpx;
+}
+.price-card .total-value {
+  font-size: 26rpx;
+  color: #999;
+  text-decoration: line-through;
+  text-align: center;
+  padding-bottom: 30rpx;
+}
+
+/* 权益卡片 */
+.benefits-card {
+  background: #fff;
+  margin: 20rpx;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  padding-left: 16rpx;
+  border-left: 6rpx solid #ff6600;
+}
+.benefit-item {
+  display: flex;
+  margin-bottom: 30rpx;
+}
+.benefit-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+  width: 60rpx;
+  text-align: center;
+}
+.benefit-content {
+  flex: 1;
+}
+.benefit-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.benefit-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* 二选一权益卡片 */
+.choice-card {
+  background: #fff8f0;
+  border: 2rpx solid #ffcc99;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 30rpx;
+}
+.choice-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ff6600;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+.choice-option {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+.choice-option:last-child {
+  margin-bottom: 0;
+}
+/* 选中状态样式 */
+.choice-option.selected {
+  border-color: #ff6600;
+  background: #fff8f0;
+}
+.option-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+.option-tag {
+  background: #ff6600;
+  color: #fff;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  margin-right: 10rpx;
+}
+.option-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #333;
+}
+.option-desc {
+  font-size: 24rpx;
+  color: #666;
+  line-height: 1.6;
+}
+.option-desc text {
+  display: block;
+}
+
+/* 底部按钮 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 20rpx 30rpx;
+  box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.05);
+}
+.adopt-btn {
+  background: #ff6600;
+  color: #fff;
+  border-radius: 50rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  border: none;
+  line-height: 1;
+  box-sizing: border-box;
+}
+.adopt-btn::after {
+  border: none;
+}
+/* 果园卡片轮播 */
+.orchard-swiper {
+  width: 100%;
+  height: 850rpx;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+.swiper-img {
+  width: 100%;
+  height: 100%;
+}

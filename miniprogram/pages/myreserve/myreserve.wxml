@@ -1,0 +1,92 @@
+<!-- pages/myreserve/myreserve.wxml -->
+<view class="container">
+  <view class="header">
+    <text class="title">我的预约</text>
+    <text class="subtitle">查看您的课程与采摘预约</text>
+  </view>
+
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 'course' ? 'active' : ''}}" bindtap="onTabChange" data-tab="course">研学课程预约</view>
+    <view class="tab-item {{activeTab === 'pick' ? 'active' : ''}}" bindtap="onTabChange" data-tab="pick">采摘预约</view>
+  </view>
+
+  <view class="reserve-list" wx:if="{{displayList.length > 0}}">
+    <view
+      class="reserve-item {{item.type === 'course' ? 'course-item' : 'pick-item'}}"
+      wx:for="{{displayList}}"
+      wx:key="viewId"
+      bindtap="viewDetail"
+      data-id="{{item.viewId}}"
+    >
+      <view class="type-badge {{item.type === 'course' ? 'course' : 'pick'}}">
+        <text>{{item.type === 'course' ? '研学课程' : '采摘预约'}}</text>
+      </view>
+
+      <view wx:if="{{item.type === 'course'}}" class="reserve-info">
+        <view class="course-cover">
+          <image src="{{item.courseImage}}" mode="aspectFill"></image>
+        </view>
+        <view class="course-details">
+          <text class="course-name">{{item.courseName}}</text>
+          <view class="info-row">
+            <text class="label">总价：</text>
+            <text class="value highlight">¥{{item.totalPrice || (item.coursePrice * (item.peopleCount || 1))}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.travelDate}}">
+            <text class="label">出行时间：</text>
+            <text class="value small">{{item.travelDate}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约人数：</text>
+            <text class="value small">{{item.peopleCount || 1}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约时间：</text>
+            <text class="value small">{{item.createTime}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view wx:else class="reserve-info">
+        <view class="info-row">
+          <text class="label">预约人：</text>
+          <text class="value">{{item.name}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">手机号：</text>
+          <text class="value">{{item.phone}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">预约日期：</text>
+          <text class="value highlight">{{item.date}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">人数：</text>
+          <text class="value">{{item.people}}</text>
+        </view>
+      </view>
+
+      <view class="status-tag {{item.normalizedStatus === 'pending' ? 'unpaid' : item.normalizedStatus}}">
+        <text>{{item.normalizedStatus === 'paid' ? '已付款' : item.normalizedStatus === 'completed' ? '已完成' : item.normalizedStatus === 'cancelled' ? '已取消' : '待付款'}}</text>
+      </view>
+
+      <view class="actions" wx:if="{{(item.type === 'course' && item.normalizedStatus === 'unpaid') || (item.type !== 'course' && item.normalizedStatus === 'pending')}}" catchtap="stopPropagation">
+        <button class="btn btn-pay" size="mini" bindtap="payNow" data-id="{{item.viewId}}">确认付款</button>
+        <button class="btn btn-default" size="mini" bindtap="cancelReserve" data-id="{{item.viewId}}">取消预约</button>
+      </view>
+
+      <view class="actions" wx:if="{{item.normalizedStatus === 'paid'}}" catchtap="stopPropagation">
+        <button class="btn btn-default" size="mini" bindtap="cancelReserve" data-id="{{item.viewId}}">取消预约</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:else>
+    <text class="empty-icon">📅</text>
+    <text class="empty-text">{{activeTab === 'course' ? '暂无研学课程预约' : '暂无采摘预约'}}</text>
+    <view class="empty-actions">
+      <button wx:if="{{activeTab === 'pick'}}" class="btn-cta" bindtap="gotoPick">去预约采摘</button>
+      <button wx:if="{{activeTab === 'course'}}" class="btn-cta secondary" bindtap="gotoStudy">去预约课程</button>
+    </view>
+  </view>
+</view>

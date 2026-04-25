@@ -1,0 +1,43 @@
+<view class="pick-container">
+  <image class="bg-image" src="{{bgImage}}" mode="aspectFill"></image>
+
+<view class="pick">
+  <image src="/images/pick_banner.jpg" mode="widthFix" class="banner"></image>
+  <view class="form">
+    <view class="title">采摘预约</view>
+    <view class="field">
+      <text>姓名</text>
+      <input placeholder="请输入姓名" bindinput="onNameInput" value="{{name}}" />
+    </view>
+    <view class="field">
+      <text>手机号</text>
+      <input type="number" placeholder="请输入手机号" bindinput="onPhoneInput" value="{{phone}}" />
+    </view>
+    <view class="field">
+      <text>预约日期</text>
+      <picker mode="date" value="{{date}}" bindchange="onDateChange">
+        <view>{{date || '请选择日期'}}</view>
+      </picker>
+    </view>
+    <view class="field">
+      <text>人数</text>
+      <picker range="{{peopleOptions}}" bindchange="onPeopleChange">
+        <view>{{people || '请选择人数'}}</view>
+      </picker>
+    </view>
+
+    <!-- 新增时间段 -->
+    <view class="field">
+      <text>预约时段</text>
+      <picker range="{{timeOptions}}" bindchange="onTimeChange">
+        <view>{{timeSlot || '请选择时段（上午/下午）'}}</view>
+      </picker>
+    </view>
+
+    <button type="warn" bindtap="submitPick">提交预约</button>
+  </view>
+  <view class="tips">
+    <text>📌 温馨提示：采摘季为每年10月-12月，预约成功后我们将发送短信确认。现场可免费品尝，带走按斤称重优惠价10元/斤。</text>
+  </view>
+</view>
+</view>
