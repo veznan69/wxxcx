@@ -1,7 +1,4 @@
 // pages/cart/cart.js
-const { getImageUrl } = require('../../utils/imageMap.js');
-const { getGoodsById } = require('../../utils/goodsData.js');   // ✅ 从数据中心获取商品信息
-
 Page({
   data: {
     cartItems: [],
@@ -11,73 +8,92 @@ Page({
   },
 
   onShow() {
-    // 检查未读消息并更新 TabBar 小红点
     const app = getApp();
     if (app && app.checkUnreadMessages) {
       app.checkUnreadMessages();
     }
-
     this.loadCartFromCloud();
   },
 
-  // 从云数据库加载购物车
+  getCartItemId(goodsId, skuId) {
+    return `${String(goodsId)}::${String(skuId || '')}`;
+  },
+
+  isSameCartItem(a, goodsId, skuId) {
+    return String(a.goodsId) === String(goodsId) && String(a.skuId || '') === String(skuId || '');
+  },
+
+  getSkuFromGoods(goods, skuId) {
+    if (!goods || !skuId) return null;
+    const variants = Array.isArray(goods.variants) ? goods.variants : [];
+    const specs = Array.isArray(goods.specs) ? goods.specs : [];
+    return variants.find(v => String(v.id) === String(skuId)) ||
+      specs.find(s => String(s.id) === String(skuId) || String(s.skuId || '') === String(skuId)) ||
+      null;
+  },
+
   async loadCartFromCloud() {
     const app = getApp();
     if (!app.globalData.openid) {
       this.setData({ cartItems: [], allChecked: false, totalPrice: 0 });
       return;
     }
-  
+
     wx.showLoading({ title: '加载中' });
     try {
       const db = wx.cloud.database();
-      const cartRes = await db.collection('carts').where({
-        _openid: app.globalData.openid
-      }).get();
-  
+      const _ = db.command;
+      const cartRes = await db.collection('carts').where({ _openid: app.globalData.openid }).get();
+
       let items = [];
-      if (cartRes.data.length > 0 && cartRes.data[0].items) {
+      if (cartRes.data.length > 0 && Array.isArray(cartRes.data[0].items)) {
         items = cartRes.data[0].items;
       }
-  
-      const cartItems = items.map(item => {
-        // ✅ 从数据中心获取商品基础信息
-        const goods = getGoodsById(item.goodsId);
-        if (!goods) return null;
 
-        // 确定最终显示的价格、图片、名称
-        let price, image, name;
-        if (item.skuId && goods.variants) {
-          // 有规格：从 variants 中找到对应规格
-          const sku = goods.variants.find(v => v.id === item.skuId);
-          if (sku) {
-            price = sku.price;
-            image = sku.image;
-            name = `${goods.name} - ${sku.name}`;
-          } else {
-            // 规格不存在（可能数据被修改），降级使用商品基础信息
-            price = item.price || goods.price;
-            image = item.image || goods.image;
-            name = goods.name;
-          }
-        } else {
-          // 无规格：直接使用商品基础信息
-          price = item.price || goods.price;
-          image = item.image || goods.image;
-          name = goods.name;
+      const goodsIds = Array.from(new Set(items.map(i => String(i.goodsId || '')).filter(Boolean)));
+      let goodsMap = {};
+      if (goodsIds.length > 0) {
+        const goodsRes = await db.collection('goods_products').where({ _id: _.in(goodsIds) }).get();
+        (goodsRes.data || []).forEach(g => {
+          goodsMap[String(g._id)] = g;
+        });
+      }
+
+      const cartItems = items.map(item => {
+        const goodsId = String(item.goodsId || '');
+        if (!goodsId) return null;
+
+        const skuId = String(item.skuId || '');
+        const goods = goodsMap[goodsId] || null;
+        const sku = this.getSkuFromGoods(goods, skuId);
+
+        const baseName = String(item.name || (goods && goods.name) || '').trim();
+        const skuName = String(item.skuName || (sku && (sku.name || sku.style)) || '').trim();
+        const name = skuName ? `${baseName || goodsId} - ${skuName}` : (baseName || goodsId);
+
+        let price = Number(item.price);
+        if (!Number.isFinite(price) || price <= 0) {
+          price = Number((sku && sku.price) || (goods && goods.price) || 0);
+        }
+
+        let image = String(item.image || '').trim();
+        if (!image) {
+          image = String((sku && sku.image) || (goods && goods.image) || '').trim();
         }
 
         return {
-          goodsId: item.goodsId,
-          skuId: item.skuId || '',
-          num: item.num,
-          name: name,
-          price: price,
-          image: image,
-          checked: item.checked !== undefined ? item.checked : true
+          id: this.getCartItemId(goodsId, skuId),
+          goodsId,
+          skuId,
+          skuName,
+          num: Number(item.num || 1),
+          name,
+          price,
+          image,
+          checked: item.checked !== undefined ? !!item.checked : true
         };
-      }).filter(item => item !== null);
-  
+      }).filter(Boolean);
+
       this.setData({ cartItems });
       this.calcTotal();
       wx.hideLoading();
@@ -88,81 +104,72 @@ Page({
     }
   },
 
-  // 计算总价和全选状态
   calcTotal() {
     let total = 0;
-    let allChecked = true;
+    let allChecked = this.data.cartItems.length > 0;
     let selectedCount = 0;
+
     this.data.cartItems.forEach(item => {
       if (item.checked) {
-        total += Number(item.price) * Number(item.num);
+        total += Number(item.price || 0) * Number(item.num || 0);
         selectedCount++;
       } else {
         allChecked = false;
       }
     });
-    this.setData({ 
-      totalPrice: total.toFixed(2), 
+
+    this.setData({
+      totalPrice: total.toFixed(2),
       allChecked,
       selectedCount
     });
   },
 
-  // 切换单个商品勾选
   async toggleCheck(e) {
-    const id = e.currentTarget.dataset.id;
-    const item = this.data.cartItems.find(i => String(i.goodsId) === String(id));
+    const rowId = e.currentTarget.dataset.id;
+    const goodsId = e.currentTarget.dataset.goodsId;
+    const skuId = e.currentTarget.dataset.skuId || '';
+
+    const item = this.data.cartItems.find(i => i.id === rowId);
     if (!item) {
       console.error('未找到对应商品');
       return;
     }
 
     const newChecked = !item.checked;
-    const items = this.data.cartItems.map(i => {
-      if (String(i.goodsId) === String(id)) {
-        return { ...i, checked: newChecked };
-      }
-      return i;
-    });
-    this.setData({ cartItems: items }, () => {
-      this.calcTotal();
-    });
+    const items = this.data.cartItems.map(i => (i.id === rowId ? { ...i, checked: newChecked } : i));
+    this.setData({ cartItems: items }, () => this.calcTotal());
 
     const app = getApp();
     if (!app.globalData.openid) return;
+
     try {
       await wx.cloud.callFunction({
         name: 'updateCartChecked',
-        data: { goodsId: id, checked: newChecked }
+        data: { goodsId, skuId, checked: newChecked }
       });
     } catch (err) {
       console.error('更新勾选状态失败', err);
-      const rollbackItems = this.data.cartItems.map(i => {
-        if (String(i.goodsId) === String(id)) {
-          return { ...i, checked: !newChecked };
-        }
-        return i;
-      });
-      this.setData({ cartItems: rollbackItems }, () => {
-        this.calcTotal();
-      });
+      const rollbackItems = this.data.cartItems.map(i => (i.id === rowId ? { ...i, checked: !newChecked } : i));
+      this.setData({ cartItems: rollbackItems }, () => this.calcTotal());
       wx.showToast({ title: '更新失败', icon: 'none' });
     }
   },
 
-  // 增加数量
   async addNum(e) {
-    const id = e.currentTarget.dataset.id;
-    const item = this.data.cartItems.find(i => i.goodsId === id);
+    const goodsId = e.currentTarget.dataset.goodsId;
+    const skuId = e.currentTarget.dataset.skuId || '';
+    const rowId = e.currentTarget.dataset.id;
+    const item = this.data.cartItems.find(i => i.id === rowId);
     if (!item) return;
-    const newNum = item.num + 1;
-    await this.updateCartItemNum(id, newNum);
+    await this.updateCartItemNum(goodsId, skuId, item.num + 1);
   },
 
-  // 减少数量
   async subNum(e) {
-    const id = e.currentTarget.dataset.id;
-    const item = this.data.cartItems.find(i => i.goodsId === id);
+    const goodsId = e.currentTarget.dataset.goodsId;
+    const skuId = e.currentTarget.dataset.skuId || '';
+    const rowId = e.currentTarget.dataset.id;
+    const item = this.data.cartItems.find(i => i.id === rowId);
     if (!item) return;
 
     if (item.num === 1) {
@@ -171,41 +178,34 @@ Page({
         content: '确定要删除该商品吗？',
         success: async (res) => {
           if (res.confirm) {
-            await this.removeCartItem(id);
+            await this.removeCartItem(goodsId, skuId);
           }
         }
       });
       return;
     }
-    const newNum = item.num - 1;
-    await this.updateCartItemNum(id, newNum);
+
+    await this.updateCartItemNum(goodsId, skuId, item.num - 1);
   },
 
-  // 删除商品
-  async removeCartItem(goodsId) {
+  async removeCartItem(goodsId, skuId = '') {
     const app = getApp();
     if (!app.globalData.openid) return;
 
     wx.showLoading({ title: '删除中' });
     try {
       const db = wx.cloud.database();
-      const cartRes = await db.collection('carts').where({
-        _openid: app.globalData.openid
-      }).get();
+      const cartRes = await db.collection('carts').where({ _openid: app.globalData.openid }).get();
       if (cartRes.data.length === 0) return;
 
       const cartId = cartRes.data[0]._id;
-      const currentItems = cartRes.data[0].items;
-      const newItems = currentItems.filter(item => item.goodsId !== goodsId);
+      const currentItems = cartRes.data[0].items || [];
+      const newItems = currentItems.filter(item => !this.isSameCartItem(item, goodsId, skuId));
 
-      await db.collection('carts').doc(cartId).update({
-        data: { items: newItems }
-      });
+      await db.collection('carts').doc(cartId).update({ data: { items: newItems } });
 
-      const cartItems = this.data.cartItems.filter(item => item.goodsId !== goodsId);
-      this.setData({ cartItems }, () => {
-        this.calcTotal();
-      });
+      const cartItems = this.data.cartItems.filter(item => !this.isSameCartItem(item, goodsId, skuId));
+      this.setData({ cartItems }, () => this.calcTotal());
 
       wx.hideLoading();
       wx.showToast({ title: '已删除', icon: 'success' });
@@ -216,37 +216,34 @@ Page({
     }
   },
 
-  // 更新云数据库中指定商品的数量
-  async updateCartItemNum(goodsId, newNum) {
+  async updateCartItemNum(goodsId, skuId = '', newNum) {
     const app = getApp();
     if (!app.globalData.openid) return;
-  
+
     wx.showLoading({ title: '更新中' });
     try {
       const db = wx.cloud.database();
-      const cartRes = await db.collection('carts').where({
-        _openid: app.globalData.openid
-      }).get();
+      const cartRes = await db.collection('carts').where({ _openid: app.globalData.openid }).get();
       if (cartRes.data.length === 0) return;
-  
+
       const cartId = cartRes.data[0]._id;
-      const currentItems = cartRes.data[0].items;
+      const currentItems = cartRes.data[0].items || [];
       const newItems = currentItems.map(item => {
-        if (item.goodsId === goodsId) {
-          item.num = newNum;
+        if (this.isSameCartItem(item, goodsId, skuId)) {
+          return { ...item, num: newNum };
         }
         return item;
-      }).filter(item => item.num > 0);
-    
-      await db.collection('carts').doc(cartId).update({
-        data: { items: newItems }
-      });
-    
+      }).filter(item => Number(item.num || 0) > 0);
+
+      await db.collection('carts').doc(cartId).update({ data: { items: newItems } });
+
       const cartItems = this.data.cartItems.map(item => {
-        if (item.goodsId === goodsId) item.num = newNum;
+        if (this.isSameCartItem(item, goodsId, skuId)) {
+          return { ...item, num: newNum };
+        }
         return item;
-      }).filter(item => item.num > 0);
-      
+      }).filter(item => Number(item.num || 0) > 0);
+
       this.setData({ cartItems }, () => this.calcTotal());
       wx.hideLoading();
     } catch (err) {
@@ -256,7 +253,6 @@ Page({
     }
   },
 
-  // 结算
   checkout() {
     const app = getApp();
     if (!app.checkLogin()) return;
@@ -266,11 +262,11 @@ Page({
       wx.showToast({ title: '请选择商品', icon: 'none' });
       return;
     }
+
     wx.setStorageSync('checkoutItems', selected);
     wx.navigateTo({ url: '/pages/order/order' });
   },
 
-  // 手动跳转到商城 tab 页
   goToShop() {
     wx.switchTab({ url: '/pages/goods/goods' });
   },

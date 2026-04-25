@@ -1,27 +1,55 @@
-const cloud = require('wx-server-sdk')
-cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
-const db = cloud.database()
+const cloud = require('wx-server-sdk');
 
-exports.main = async (event, context) => {
-  const { goodsId, num = 1, sku } = event   // ✅ 接收规格对象
-  const wxContext = cloud.getWXContext()
-  const openid = wxContext.OPENID
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
+const db = cloud.database();
 
-  const cartCollection = db.collection('carts')
-  let cartRecord = await cartCollection.where({ _openid: openid }).get()
+function findSku(goods, skuId) {
+  if (!goods || !skuId) return null;
+  const variants = Array.isArray(goods.variants) ? goods.variants : [];
+  const specs = Array.isArray(goods.specs) ? goods.specs : [];
+  return variants.find(v => String(v.id) === String(skuId)) ||
+    specs.find(s => String(s.id) === String(skuId) || String(s.skuId || '') === String(skuId)) ||
+    null;
+}
 
-  // 构造购物车项
+exports.main = async (event) => {
+  const { goodsId, num = 1, sku } = event;
+  const wxContext = cloud.getWXContext();
+  const openid = wxContext.OPENID;
+
+  if (!goodsId || !openid) {
+    return { success: false, error: 'missing goodsId or openid' };
+  }
+
+  const goodsRes = await db.collection('goods_products').doc(String(goodsId)).get();
+  const goods = goodsRes && goodsRes.data;
+  if (!goods) {
+    return { success: false, error: 'goods not found' };
+  }
+
+  const skuId = sku && sku.id ? String(sku.id) : '';
+  const resolvedSku = skuId ? (findSku(goods, skuId) || sku) : null;
+
+  const price = Number((resolvedSku && resolvedSku.price) || goods.price || 0);
+  const image = String((resolvedSku && resolvedSku.image) || goods.image || '').trim();
+  const skuName = String((resolvedSku && (resolvedSku.name || resolvedSku.style)) || (sku && sku.name) || '').trim();
+
   const newItem = {
-    goodsId,
-    num,
-    checked: true
+    goodsId: String(goodsId),
+    num: Number(num || 1),
+    checked: true,
+    name: String(goods.name || '').trim(),
+    price,
+    image
+  };
+
+  if (skuId) {
+    newItem.skuId = skuId;
+    newItem.skuName = skuName;
   }
-  if (sku) {
-    newItem.skuId = sku.id
-    newItem.skuName = sku.name
-    newItem.price = sku.price
-    newItem.image = sku.image
-  }
+
+  const cartCollection = db.collection('carts');
+  const cartRecord = await cartCollection.where({ _openid: openid }).get();
 
   if (cartRecord.data.length === 0) {
     await cartCollection.add({
@@ -30,26 +58,32 @@ exports.main = async (event, context) => {
         items: [newItem],
         createTime: db.serverDate()
       }
-    })
-  } else {
-    const cartId = cartRecord.data[0]._id
-    const items = cartRecord.data[0].items
-
-    // 查找是否存在相同商品且相同规格的项
-    const existIndex = items.findIndex(item => {
-      if (item.goodsId !== goodsId) return false
-      if (sku && item.skuId) {
-        return item.skuId === sku.id
-      }
-      return !sku && !item.skuId
-    })
-
-    if (existIndex !== -1) {
-      items[existIndex].num += num
-    } else {
-      items.push(newItem)
-    }
-    await cartCollection.doc(cartId).update({ data: { items } })
+    });
+    return { success: true };
   }
-  return { success: true }
-}
+
+  const cartId = cartRecord.data[0]._id;
+  const items = cartRecord.data[0].items || [];
+  const existIndex = items.findIndex(item => {
+    if (String(item.goodsId) !== String(goodsId)) return false;
+    const itemSkuId = String(item.skuId || '');
+    return itemSkuId === skuId;
+  });
+
+  if (existIndex !== -1) {
+    items[existIndex].num = Number(items[existIndex].num || 0) + Number(num || 1);
+    // 每次加购时同步最新展示字段，避免历史脏数据导致购物车回显异常。
+    items[existIndex].name = newItem.name;
+    items[existIndex].price = newItem.price;
+    items[existIndex].image = newItem.image;
+    if (skuId) {
+      items[existIndex].skuId = skuId;
+      items[existIndex].skuName = skuName;
+    }
+  } else {
+    items.push(newItem);
+  }
+
+  await cartCollection.doc(cartId).update({ data: { items } });
+  return { success: true };
+};

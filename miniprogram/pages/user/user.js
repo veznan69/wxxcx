@@ -20,11 +20,23 @@ Page({
   },
 
   onShow() {
+    this._menuAnimatedInThisEntry = false;
+    if (this._menuBuildTimer) {
+      clearTimeout(this._menuBuildTimer);
+      this._menuBuildTimer = null;
+    }
     this.rebuildMenus();
     this.refreshUserState();
     this.loadOrderStatusStats();
     this.checkUnreadMessages();
     this.loadUserPoints();
+  },
+
+  onHide() {
+    if (this._menuBuildTimer) {
+      clearTimeout(this._menuBuildTimer);
+      this._menuBuildTimer = null;
+    }
   },
 
   async checkUnreadMessages() {
@@ -141,11 +153,24 @@ Page({
     allMenus.push({ name: '退出登录', icon: '🚪', tap: 'onLogout' });
 
     // 先清空再重建，保证每次进入“我的”页面都触发从上到下动画
-    this.setData({ roleMenus: [] }, () => {
-      setTimeout(() => {
-        this.setData({ roleMenus: allMenus });
-      }, 16);
-    });
+    const shouldAnimate = !this._menuAnimatedInThisEntry;
+    this._menuAnimatedInThisEntry = true;
+
+    // 每次进入页面仅首次构建时触发一次从上到下动画，后续刷新只更新内容不重播动画。
+    if (shouldAnimate) {
+      this.setData({ roleMenus: [] }, () => {
+        if (this._menuBuildTimer) {
+          clearTimeout(this._menuBuildTimer);
+        }
+        this._menuBuildTimer = setTimeout(() => {
+          this.setData({ roleMenus: allMenus });
+          this._menuBuildTimer = null;
+        }, 16);
+      });
+      return;
+    }
+
+    this.setData({ roleMenus: allMenus });
   },
 
   async handleLogin() {
@@ -514,4 +539,3 @@ Page({
     wx.navigateTo({ url: '/pages/pointsMall/pointsMall' });
   }
 });
-

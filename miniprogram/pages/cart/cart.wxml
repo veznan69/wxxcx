@@ -1,46 +1,47 @@
 <view class="cart-page">
-  <!-- 购物车列表 -->
-  <view wx:if="{{cartItems.length > 0}}" class="cart-list">
-    <view class="cart-item" wx:for="{{cartItems}}" wx:key="goodsId">
-    <checkbox 
-      class="item-checkbox" 
-      value="{{item.goodsId}}" 
-      checked="{{item.checked}}" 
-      bindtap="toggleCheck"         
-      data-id="{{item.goodsId}}" 
-      color="#ff6600" 
-    />
+  <scroll-view
+    wx:if="{{cartItems.length > 0}}"
+    class="cart-list"
+    scroll-y="true"
+    enhanced="true"
+    show-scrollbar="false"
+  >
+    <view class="cart-item" wx:for="{{cartItems}}" wx:key="id">
+      <checkbox
+        class="item-checkbox"
+        value="{{item.id}}"
+        checked="{{item.checked}}"
+        bindtap="toggleCheck"
+        data-id="{{item.id}}"
+        data-goods-id="{{item.goodsId}}"
+        data-sku-id="{{item.skuId}}"
+        color="#ff6600"
+      />
       <image class="item-image" src="{{item.image}}" mode="aspectFill"></image>
       <view class="item-info">
         <text class="item-name">{{item.name}}</text>
-        <text class="item-price">¥{{item.price}}</text>
+        <text class="item-price">￥{{item.price}}</text>
         <view class="item-stepper">
-          <view class="stepper-btn minus" bindtap="subNum" data-id="{{item.goodsId}}">-</view>
+          <view class="stepper-btn minus" bindtap="subNum" data-id="{{item.id}}" data-goods-id="{{item.goodsId}}" data-sku-id="{{item.skuId}}">-</view>
           <text class="stepper-num">{{item.num}}</text>
-          <view class="stepper-btn plus" bindtap="addNum" data-id="{{item.goodsId}}">+</view>
+          <view class="stepper-btn plus" bindtap="addNum" data-id="{{item.id}}" data-goods-id="{{item.goodsId}}" data-sku-id="{{item.skuId}}">+</view>
         </view>
       </view>
     </view>
-  </view>
+    <view class="cart-list-bottom-space"></view>
+  </scroll-view>
 
-  <!-- 空购物车 -->
   <view wx:else class="empty-cart">
     <text class="empty-icon">🛒</text>
     <text class="empty-text">购物车空空如也</text>
-  <button 
-    class="go-shop-btn" 
-    open-type="switchTab" 
-    url="/pages/goods/goods" 
-    bindtap="goToShop"
-  >去逛逛</button>
+    <button class="go-shop-btn" open-type="switchTab" url="/pages/goods/goods" bindtap="goToShop">去逛逛</button>
   </view>
 
-  <!-- 底部结算栏 -->
   <view class="settlement-bar" wx:if="{{cartItems.length > 0}}">
     <view class="total-area">
       <text class="total-label">合计</text>
       <view class="total-price-wrapper">
-        <text class="total-symbol">¥</text>
+        <text class="total-symbol">￥</text>
         <text class="total-price">{{totalPrice}}</text>
       </view>
     </view>

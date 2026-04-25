@@ -1,4 +1,4 @@
-// app.js
+﻿// app.js
 App({
   onLaunch: function () {
     // 【新增】初始化云开发环境（环境ID请替换为你自己的）
@@ -115,23 +115,19 @@ App({
         // 更新 tabBar 小红点（只在 TabBar 页面才调用 API，避免报错）
         const pages = getCurrentPages();
         const currentPage = pages[pages.length - 1];
-        const tabBarPages = ['pages/index/index', 'pages/goods/goods', 'pages/cart/cart', 'pages/user/user'];
+        const tabBarPages = ['pages/index/index', 'pages/goods/goods', 'pages/youquan/youquan', 'pages/cart/cart', 'pages/user/user'];
         const isTabBarPage = currentPage && tabBarPages.includes(currentPage.route);
 
         if (isTabBarPage) {
           if (hasUnread) {
             console.log('显示 TabBar 小红点');
-            wx.showTabBarRedDot({
-              index: 3
-            }).catch(err => {
-              console.error('显示 TabBar 小红点失败:', err);
+            wx.showTabBarRedDot({ index: 4 }).catch(err => {
+              console.error('显示 TabBar 小红点失败', err);
             });
           } else {
             console.log('隐藏 TabBar 小红点');
-            wx.hideTabBarRedDot({
-              index: 3
-            }).catch(err => {
-              console.error('隐藏 TabBar 小红点失败:', err);
+            wx.hideTabBarRedDot({ index: 4 }).catch(err => {
+              console.error('隐藏 TabBar 小红点失败', err);
             });
           }
         } else {
@@ -139,7 +135,7 @@ App({
         }
       }
     } catch (err) {
-      console.error('检查未读消息失败:', err);
+      console.error('检查未读消息失败', err);
     }
   },
 

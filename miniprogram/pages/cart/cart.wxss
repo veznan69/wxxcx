@@ -1,15 +1,20 @@
-/* pages/cart/cart.wxss */
+﻿/* pages/cart/cart.wxss */
 .cart-page {
   background-color: #f8f8f8;
-  min-height: 100vh;
-  padding-bottom: 180rpx !important; /* 修复遮挡 */
+  height: 100vh;
 }
 
 .cart-list {
+  height: calc(100vh - 140rpx - constant(safe-area-inset-bottom));
+  height: calc(100vh - 140rpx - env(safe-area-inset-bottom));
+  box-sizing: border-box;
   padding: 20rpx;
 }
 
-/* 购物车商品卡片 */
+.cart-list-bottom-space {
+  height: 40rpx;
+}
+
 .cart-item {
   display: flex;
   align-items: center;
@@ -61,7 +66,6 @@
   margin-bottom: 16rpx;
 }
 
-/* 数量加减器 */
 .item-stepper {
   display: flex;
   align-items: center;
@@ -94,7 +98,6 @@
   color: #333;
 }
 
-/* 空购物车样式 */
 .empty-cart {
   display: flex;
   flex-direction: column;
@@ -130,12 +133,11 @@
   transform: scale(0.98);
 }
 
-/* ========== 底部结算栏（美化版） ========== */
 .settlement-bar {
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(20rpx);
   display: flex;
@@ -149,7 +151,6 @@
   z-index: 10;
 }
 
-/* 合计区域 */
 .total-area {
   flex: 1;
 }
@@ -180,7 +181,6 @@
   letter-spacing: -1rpx;
 }
 
-/* 结算按钮（大圆角渐变） */
 .checkout-btn {
   background: linear-gradient(135deg, #ff8c42, #ff6600);
   border: none;

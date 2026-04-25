@@ -72,9 +72,15 @@ exports.main = async (event) => {
     if (cartRecord.data.length > 0) {
       const cartId = cartRecord.data[0]._id;
       const currentItems = cartRecord.data[0].items || [];
-      const newItems = currentItems.filter(
-        item => !selectedItems.some(sel => sel.goodsId === item.goodsId)
-      );
+      const newItems = currentItems.filter(item => {
+        const itemGoodsId = String(item.goodsId || '');
+        const itemSkuId = String(item.skuId || '');
+        return !selectedItems.some(sel => {
+          const selGoodsId = String(sel.goodsId || '');
+          const selSkuId = String(sel.skuId || '');
+          return selGoodsId === itemGoodsId && selSkuId === itemSkuId;
+        });
+      });
       await db.collection('carts').doc(cartId).update({ data: { items: newItems } });
     }
   }
