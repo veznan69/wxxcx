@@ -676,6 +676,9 @@ exports.main = async (event) => {
     }
   }
 
+  // ✅ 必须先初始化 role
+  let role = await getUserRole(OPENID);
+
   // ✅ 角色提升：如果当前 OPENID 就是管理员，或者前端传来匹配的管理员 openid
   const dataObj = event.data || {};
   const adminOpenid = dataObj.adminOpenid;
