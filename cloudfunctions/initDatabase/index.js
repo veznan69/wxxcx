@@ -18,7 +18,8 @@ exports.main = async () => {
       'point_records',
       'point_goods',
       'point_exchanges',
-      'check_in_records'
+      'check_in_records',
+      'adoptions'
     ];
 
     const results = [];
@@ -64,3 +65,4 @@ exports.main = async () => {
     };
   }
 };
+
