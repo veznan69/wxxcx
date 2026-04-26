@@ -1,5 +1,6 @@
+/* pages/strategy/strategy.wxss */
 .strategy {
-  background-color: #f5f5f5;
+  background-color: #fdf6f0;
   min-height: 100vh;
   padding-bottom: 40rpx;
 }
@@ -7,27 +8,38 @@
 .banner image {
   width: 100%;
   display: block;
+  border-radius: 0 0 30rpx 30rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0, 0, 0, 0.06);
 }
 
 .article-list {
-  padding: 20rpx;
+  padding: 30rpx 24rpx;
 }
 
 .article {
   display: flex;
-  background: #fff;
-  border-radius: 20rpx;
-  margin-bottom: 20rpx;
-  padding: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+  background: #ffffff;
+  border-radius: 28rpx;
+  margin-bottom: 26rpx;
+  padding: 28rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid rgba(0,0,0,0.03);
+  transition: all 0.25s ease;
+}
+
+.article:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
 }
 
 .article image {
-  width: 200rpx;
-  height: 160rpx;
-  border-radius: 16rpx;
-  margin-right: 20rpx;
+  width: 210rpx;
+  height: 170rpx;
+  border-radius: 20rpx;
+  margin-right: 26rpx;
   flex-shrink: 0;
+  object-fit: cover;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
 }
 
 .article .text {
@@ -35,39 +47,43 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .article .title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 12rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #3b302a;
+  margin-bottom: 16rpx;
+  /* ========== 核心修改：取消省略、自动换行、完整显示全部标题 ========== */
+  white-space: normal;
+  word-break: break-all;
+  overflow: visible;
+  text-overflow: unset;
+  letter-spacing: 0.5rpx;
 }
 
 .article .summary {
-  font-size: 26rpx;
-  color: #666;
-  line-height: 1.4;
+  font-size: 28rpx;
+  color: #5b4c42;
+  line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 12rpx;
+  margin-bottom: 16rpx;
 }
 
 .article .meta {
   display: flex;
   justify-content: space-between;
-  font-size: 22rpx;
-  color: #999;
+  font-size: 24rpx;
+  color: #b8a99f;
 }
 
 .loading, .empty {
   text-align: center;
-  padding: 60rpx;
-  color: #999;
+  padding: 80rpx 40rpx;
+  color: #c0b4a9;
   font-size: 28rpx;
 }

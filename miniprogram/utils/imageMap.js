@@ -31,9 +31,9 @@ const imageMap = {
   'course1.jpg': `${cloudBase1}2026/04/08/peUTjvn.jpg`,
   'course2.jpg': `${cloudBase1}2026/04/08/peUTxuq.jpg`,
   'course3.jpg': `${cloudBase1}2026/04/08/peUTzD0.jpg`,
-  'strategy1.jpg': `${cloudBase1}2026/04/08/peUTO3j.png`,
-  'strategy2.jpg': `${cloudBase1}2026/04/08/peUTO3j.png`,
-  'strategy3.jpg': `${cloudBase1}2026/04/08/peUTO3j.png`,
+  'strategy1.jpg': `${cloudBase1}2026/04/25/pefzUKK.jpg`,
+  'strategy2.jpg': `${cloudBase1}2026/04/25/pefzaDO.jpg`,
+  'strategy3.jpg': `${cloudBase1}2026/04/25/pefzdbD.jpg`,
   'trace_qrcode.png': `${cloudBase1}2026/04/13/peDFimn.jpg`,  // 溯源码
   'gov_cert_thumb.png': `${cloudBase1}2026/04/08/peUTO3j.png`,  // 政府对接证明大图的缩略图
   'gov_cert_full.jpg': `${cloudBase1}2026/04/08/peUTO3j.png`,  // 预览政府对接证明大图

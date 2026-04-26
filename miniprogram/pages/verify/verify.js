@@ -3,59 +3,60 @@ Page({
   data: {
     adoptId: '',
     currentTab: 0,
-    benefitList: [
-      { name: '脐橙权益', status: 'unused', code: 'ADV20250412001', desc: '保底70斤脐橙，包邮到家', validTime: '2026-04-12' },
-      { name: '酒店住宿', status: 'unused', code: 'ADV20250412002', desc: '大余丫山酒店2天1晚（含双早）', validTime: '2026-04-12' },
-      { name: '景区门票', status: 'unused', code: 'ADV20250412003', desc: '景区门票2张', validTime: '2026-04-12' },
-      { name: '土鸡土鸡蛋', status: 'unused', code: 'ADV20250412004', desc: '6只土鸡+30枚土鸡蛋', validTime: '2026-04-12' }
-    ],
+    benefitList: [],
     currentBenefit: null
   },
 
   onLoad(options) {
-    this.setData({ adoptId: options.adoptId });
+    this.setData({ adoptId: options.adoptId || '' });
     this.loadBenefits();
   },
 
-  // 从云数据库加载认养详情及权益列表
   async loadBenefits() {
+    if (!this.data.adoptId) {
+      wx.showToast({ title: '缺少认养ID', icon: 'none' });
+      return;
+    }
+
     wx.showLoading({ title: '加载中' });
     try {
       const res = await wx.cloud.callFunction({
         name: 'adoptionManager',
-        data: { 
-          action: 'getDetail', 
+        data: {
+          action: 'getDetail',
           data: { adoptId: this.data.adoptId }
         }
       });
       wx.hideLoading();
-      
-      if (res.result.success) {
-        const benefits = res.result.data.benefits || [];
-        this.setData({ benefitList: benefits });
-        this.updateCurrentBenefit();
-      } else {
-        wx.showToast({ title: res.result.error, icon: 'none' });
+
+      if (!(res.result && res.result.success)) {
+        wx.showToast({ title: (res.result && res.result.error) || '加载失败', icon: 'none' });
+        this.setData({ benefitList: [], currentBenefit: null });
+        return;
       }
+
+      const benefits = Array.isArray(res.result.data && res.result.data.benefits) ? res.result.data.benefits : [];
+      this.setData({ benefitList: benefits, currentTab: 0 }, () => this.updateCurrentBenefit());
     } catch (err) {
       wx.hideLoading();
       console.error('加载权益失败', err);
       wx.showToast({ title: '网络错误', icon: 'none' });
+      this.setData({ benefitList: [], currentBenefit: null });
     }
   },
 
-  // 切换权益标签
   switchTab(e) {
-    const index = e.currentTarget.dataset.index;
-    this.setData({ currentTab: index });
-    this.updateCurrentBenefit();
+    const index = Number(e.currentTarget.dataset.index || 0);
+    this.setData({ currentTab: index }, () => this.updateCurrentBenefit());
   },
 
-  // 更新当前选中的权益
   updateCurrentBenefit() {
     const { benefitList, currentTab } = this.data;
-    if (benefitList.length > 0) {
-      this.setData({ currentBenefit: benefitList[currentTab] });
+    if (!Array.isArray(benefitList) || benefitList.length === 0) {
+      this.setData({ currentBenefit: null });
+      return;
     }
+    const safeIndex = Math.min(Math.max(currentTab, 0), benefitList.length - 1);
+    this.setData({ currentTab: safeIndex, currentBenefit: benefitList[safeIndex] });
   }
 });

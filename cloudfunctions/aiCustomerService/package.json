@@ -1,0 +1,9 @@
+{
+  "name": "aiCustomerService",
+  "version": "1.0.0",
+  "description": "多AI服务支持的智能客服云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
