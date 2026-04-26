@@ -98,8 +98,10 @@
   flex-direction: row;
 }
 
+/* ✅ 核心改动：自己的消息改为气泡在左、头像在右 */
 .message-row-right {
-  flex-direction: row-reverse;
+  flex-direction: row;          /* 不再反转，按DOM顺序：气泡→头像 */
+  justify-content: flex-end;    /* 整体靠右 */
 }
 
 /* 消息头像 */
@@ -114,8 +116,10 @@
   margin-right: 20rpx;
 }
 
+/* 自己消息的头像：在气泡右侧，需左侧间距 */
 .message-row-right .message-avatar {
   margin-left: 20rpx;
+  margin-right: 0;
 }
 
 /* 消息内容容器 */
@@ -123,14 +127,17 @@
   max-width: 70%;
 }
 
+/* 左对齐的消息容器 */
 .message-row-left .message-content-wrapper {
   margin-left: 0;
 }
 
+/* 右对齐的消息容器（自己） */
 .message-row-right .message-content-wrapper {
   margin-right: 0;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-start;  /* 让气泡内容左对齐 */
 }
 
 /* AI名称 */
@@ -184,10 +191,11 @@
   border: none;
 }
 
+/* ✅ 自己气泡的圆角：气泡在左，右侧靠头像，左上角为小圆角 */
 .message-row-right .message-bubble {
   margin-right: 20rpx;
   border-radius: 8rpx;
-  border-top-right-radius: 4rpx;
+  border-top-left-radius: 4rpx;   /* 左上方小圆角，右上方恢复8rpx */
 }
 
 .self-bubble .message-text {
@@ -229,27 +237,13 @@
   animation: typing 1.4s infinite;
 }
 
-.typing-dot:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.typing-dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing-dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes typing {
-  0%, 60%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  30% {
-    transform: translateY(-10rpx);
-    opacity: 1;
-  }
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-10rpx); opacity: 1; }
 }
 
 /* 加载更多 */
@@ -289,7 +283,6 @@
   padding: 12rpx 16rpx;
 }
 
-/* 输入框 */
 .message-input {
   flex: 1;
   margin: 0 20rpx;
@@ -302,7 +295,6 @@
   color: #CCCCCC;
 }
 
-/* 发送按钮 */
 .send-btn {
   min-width: 120rpx;
   height: 60rpx;

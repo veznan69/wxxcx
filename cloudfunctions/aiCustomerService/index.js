@@ -9,6 +9,10 @@ cloud.init({
 })
 
 const db = cloud.database()
+const SAFE_EXCLUDE_FIELDS = {
+  users: ['_openid', 'role']
+}
+const DB_PAGE_SIZE = Number(process.env.AI_DB_PAGE_SIZE || 100)
 
 // AI服务提供商配置
 const AI_PROVIDER = process.env.AI_PROVIDER || 'mock' // 可选: deepseek, openai, moonshot, zhipu, qianwen, wenxin, hunyuan, mock
@@ -182,8 +186,9 @@ async function chatWithAI(message, userId, history = [], eventProvider = null) {
     }
 
     // 构建对话上下文
+    const dbContext = await buildDatabaseContextForAI()
     const messages = [
-      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'system', content: buildSystemPromptWithDbContext(dbContext) },
       ...history.slice(-6), // 只保留最近6轮对话上下文
       { role: 'user', content: message }
     ]
@@ -658,6 +663,72 @@ async function callHunyuanAPI(messages, config) {
   })
 }
 
+function buildSystemPromptWithDbContext(dbContext) {
+  if (!dbContext) {
+    return SYSTEM_PROMPT
+  }
+  return `${SYSTEM_PROMPT}\n\n【云数据库实时数据（已脱敏）】\n${dbContext}`
+}
+
+async function buildDatabaseContextForAI() {
+  try {
+    const collectionsRes = await db.listCollections()
+    const collections = (collectionsRes.collections || []).map(item => item.name).filter(Boolean)
+    const context = {}
+
+    for (const collectionName of collections) {
+      context[collectionName] = await fetchAllDocsFromCollection(collectionName)
+    }
+
+    return JSON.stringify(context)
+  } catch (error) {
+    console.error('构建数据库上下文失败:', error)
+    return ''
+  }
+}
+
+async function fetchAllDocsFromCollection(collectionName) {
+  const docs = []
+  let skip = 0
+
+  while (true) {
+    const res = await db.collection(collectionName).skip(skip).limit(DB_PAGE_SIZE).get()
+    const rows = (res && Array.isArray(res.data)) ? res.data : []
+
+    if (!rows.length) {
+      break
+    }
+
+    for (const doc of rows) {
+      docs.push(sanitizeCollectionDoc(collectionName, doc))
+    }
+
+    if (rows.length < DB_PAGE_SIZE) {
+      break
+    }
+
+    skip += DB_PAGE_SIZE
+  }
+
+  return docs
+}
+
+function sanitizeCollectionDoc(collectionName, doc) {
+  if (!doc || typeof doc !== 'object') {
+    return doc
+  }
+
+  const safeDoc = { ...doc }
+  const blockedFields = SAFE_EXCLUDE_FIELDS[collectionName] || []
+  for (const field of blockedFields) {
+    if (Object.prototype.hasOwnProperty.call(safeDoc, field)) {
+      delete safeDoc[field]
+    }
+  }
+
+  return safeDoc
+}
+
 /**
  * 生成模拟回复（用于测试，实际使用时删除）
  * TODO: 替换为真实的腾讯混元API调用
@@ -699,7 +770,8 @@ function generateMockResponse(userMessage) {
  */
 async function saveChatRecord(userId, userMessage, aiResponse) {
   try {
-    const now = new Date()
+    const baseTs = Date.now()
+    const now = new Date(baseTs)
 
     // 保存用户消息
     await db.collection('ai_chat_history').add({
@@ -707,7 +779,8 @@ async function saveChatRecord(userId, userMessage, aiResponse) {
         userId: userId || 'guest',
         role: 'user',
         content: userMessage,
-        createTime: now
+        createTime: now,
+        seq: baseTs * 10
       }
     })
 
@@ -717,7 +790,8 @@ async function saveChatRecord(userId, userMessage, aiResponse) {
         userId: userId || 'guest',
         role: 'assistant',
         content: aiResponse,
-        createTime: now
+        createTime: now,
+        seq: baseTs * 10 + 1
       }
     })
 
@@ -740,17 +814,30 @@ async function getChatHistory(userId) {
       .limit(20)
       .get()
 
-    // 转换为消息格式（最近的在前）
+    // 稳定排序：先按时间，再按 seq；无 seq 的旧数据同时间按 user 在前
     const messages = res.data
-      .reverse()
+      .sort((a, b) => {
+        const ta = a.createTime ? new Date(a.createTime).getTime() : 0
+        const tb = b.createTime ? new Date(b.createTime).getTime() : 0
+        if (ta !== tb) return ta - tb
+        const sa = typeof a.seq === 'number' ? a.seq : (a.role === 'user' ? 0 : 1)
+        const sb = typeof b.seq === 'number' ? b.seq : (b.role === 'user' ? 0 : 1)
+        if (sa !== sb) return sa - sb
+        return String(a._id || '').localeCompare(String(b._id || ''))
+      })
       .map(item => ({
+        messageId: item._id,
         role: item.role,
-        content: item.content
+        content: item.content,
+        message: item.content,
+        createTime: item.createTime,
+        timestamp: item.createTime ? new Date(item.createTime).getTime() : Date.now()
       }))
 
     return {
       success: true,
-      data: messages
+      data: messages,
+      messages
     }
 
   } catch (error) {
@@ -758,7 +845,8 @@ async function getChatHistory(userId) {
     return {
       success: false,
       error: error.message,
-      data: []
+      data: [],
+      messages: []
     }
   }
 }

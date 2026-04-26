@@ -41,21 +41,27 @@ Page({
         name: 'aiCustomerService',
         data: {
           action: 'getHistory',
-          userId: app.globalData.openid || 'test_user'
+          userId: this.getCurrentUserId()
         }
       })
 
       if (res.result && res.result.success) {
-        // 检查 messages 是否存在且是数组
-        const messagesList = res.result.messages || []
-        const historyMessages = messagesList.map(msg => ({
-          id: msg.messageId,
-          content: msg.message,
-          isSelf: msg.role === 'user',
-          isAI: msg.role === 'assistant',
-          timeStr: this.formatTime(msg.timestamp),
-          showTime: this.shouldShowTime(msg.timestamp)
-        }))
+        const messagesList = res.result.data || res.result.messages || []
+        let prevTimestamp = 0
+        const historyMessages = messagesList.map((msg, index) => {
+          const timestamp = this.normalizeTimestamp(msg.timestamp || msg.createTime)
+          const showTime = !prevTimestamp || (timestamp - prevTimestamp > 5 * 60 * 1000)
+          prevTimestamp = timestamp
+          return {
+            id: msg.messageId || msg._id || index,
+            content: msg.content || msg.message || '',
+            isSelf: msg.role === 'user',
+            isAI: msg.role === 'assistant',
+            timestamp,
+            timeStr: this.formatTime(timestamp),
+            showTime
+          }
+        })
 
         // 如果没有历史消息，显示欢迎消息
         if (historyMessages.length === 0) {
@@ -63,6 +69,7 @@ Page({
         } else {
           this.setData({
             messages: historyMessages,
+            messageId: historyMessages.length,
             lastMessageTime: historyMessages[historyMessages.length - 1].timestamp
           }, () => {
             this.scrollToBottom()
@@ -196,7 +203,7 @@ Page({
         data: {
           action: 'chat',
           message: message,
-          userId: app.globalData.openid || 'test_user',
+          userId: this.getCurrentUserId(),
           history: recentMessages
         }
       })
@@ -279,6 +286,17 @@ Page({
     const hour = date.getHours().toString().padStart(2, '0')
     const minute = date.getMinutes().toString().padStart(2, '0')
     return `${hour}:${minute}`
+  },
+
+  getCurrentUserId() {
+    return app.globalData.openid || wx.getStorageSync('openid') || 'guest'
+  },
+
+  normalizeTimestamp(value) {
+    if (!value) return Date.now()
+    if (typeof value === 'number') return value
+    const t = new Date(value).getTime()
+    return Number.isNaN(t) ? Date.now() : t
   },
 
   // 输入框失去焦点时，强制重置键盘高度
